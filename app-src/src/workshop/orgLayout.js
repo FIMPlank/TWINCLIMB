@@ -40,7 +40,7 @@ export function layoutOrgTree(units, opts = {}) {
     const w = subtreeWidth(unit)
     const cx = left + w / 2
     const y = depth * (boxHeight + vGap)
-    positions[unit.id] = { x: cx - boxWidth / 2, y, cx, cy: y + boxHeight / 2, width: boxWidth, height: boxHeight }
+    positions[unit.id] = { x: cx - boxWidth / 2, y, cx, cy: y + boxHeight / 2, width: boxWidth, height: boxHeight, depth }
 
     const children = byParent[unit.id] || []
     if (children.length === 0) return
@@ -62,5 +62,5 @@ export function layoutOrgTree(units, opts = {}) {
   const totalWidth = Math.max(boxWidth, rootLeft - hGap)
   const totalHeight = (maxDepth + 1) * boxHeight + maxDepth * vGap
 
-  return { positions, connectors, totalWidth, totalHeight, boxWidth, boxHeight }
+  return { positions, connectors, totalWidth, totalHeight, boxWidth, boxHeight, vGap }
 }

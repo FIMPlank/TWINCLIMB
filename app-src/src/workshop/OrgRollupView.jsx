@@ -114,11 +114,10 @@ export default function OrgRollupView({ strings, lang, orgId }) {
   units.forEach((u) => { nameById[u.id] = u.name })
   const orgParticipantTotal = totalDistinctParticipants(units, participantsBySession)
 
-  // Rather than drawing a line across the canvas (which either cuts through
-  // unrelated boxes or, at dozens of departments, turns into unreadable
-  // clutter), selecting a unit highlights whichever OTHER boxes it's
-  // linked to -- a lookup that costs the same whether the org has 5
-  // departments or 50.
+  // Selecting a unit highlights whichever OTHER boxes it's linked to, and
+  // (via highlightedUnitId passed to OrgCanvas) bolds its connector line
+  // among all the faint ones -- a lookup that costs the same whether the
+  // org has 5 departments or 50.
   const linkedToSelected = new Set()
   if (selectedId) {
     links.forEach((l) => {
@@ -156,6 +155,8 @@ export default function OrgRollupView({ strings, lang, orgId }) {
             units={units}
             boxWidth={168}
             boxHeight={188}
+            links={links}
+            highlightedUnitId={selectedId}
             renderNode={(unit) => {
               const node = rollupById[unit.id]
               const isRoot = unit.id === root?.unit.id

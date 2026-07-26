@@ -209,6 +209,7 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
   const [copiedId, setCopiedId] = useState(null)
   const [addingUnder, setAddingUnder] = useState(null) // unit or null
   const [linkingUnit, setLinkingUnit] = useState(null) // unit or null
+  const [hoveredUnitId, setHoveredUnitId] = useState(null)
   const verifiedKey = `twinclimb_org_verified_${orgId}`
   const [verified, setVerified] = useState(() => { try { return localStorage.getItem(verifiedKey) === '1' } catch (e) { return false } })
   const [pin, setPin] = useState('')
@@ -328,6 +329,8 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
           units={units}
           boxWidth={220}
           boxHeight={152}
+          links={links}
+          highlightedUnitId={hoveredUnitId}
           renderNode={(unit) => {
             const session = sessionsById[unit.session_id]
             const pill = statusPill(strings, unit, participantsBySession)
@@ -341,7 +344,11 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
               extraParents.length > 0 ? strings.wsOrgAlsoFeedsInto(extraParents.join(', ')) : null,
             ].filter(Boolean).join(' ')
             return (
-              <div style={{ border: `1px solid ${isRoot ? 'var(--ws-brand)' : 'var(--ws-border-soft)'}`, borderRadius: 'var(--ws-radius-md)', padding: '12px 13px', background: isRoot ? 'var(--ws-brand-tint)' : 'var(--ws-surface)', height: '100%', boxSizing: 'border-box', boxShadow: 'var(--ws-shadow-soft)' }}>
+              <div
+                onMouseEnter={() => setHoveredUnitId(unit.id)}
+                onMouseLeave={() => setHoveredUnitId((cur) => (cur === unit.id ? null : cur))}
+                style={{ border: `1px solid ${isRoot ? 'var(--ws-brand)' : 'var(--ws-border-soft)'}`, borderRadius: 'var(--ws-radius-md)', padding: '12px 13px', background: isRoot ? 'var(--ws-brand-tint)' : 'var(--ws-surface)', height: '100%', boxSizing: 'border-box', boxShadow: 'var(--ws-shadow-soft)' }}
+              >
                 <div style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 14, lineHeight: 1.25, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                   {unit.name}
                 </div>
