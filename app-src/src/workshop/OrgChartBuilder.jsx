@@ -314,6 +314,8 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
   }
 
   const root = units.find((u) => !u.parent_unit_id)
+  const unitNameById = {}
+  units.forEach((u) => { unitNameById[u.id] = u.name })
 
   return (
     <div style={{ maxWidth: 1100, margin: '0 auto', padding: '36px 28px 100px' }}>
@@ -326,13 +328,18 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
           units={units}
           boxWidth={220}
           boxHeight={152}
-          extraConnectors={links.map((l) => ({ parentId: l.parent_unit_id, childId: l.unit_id }))}
           renderNode={(unit) => {
             const session = sessionsById[unit.session_id]
             const pill = statusPill(strings, unit, participantsBySession)
             const isRoot = unit.id === root?.id
             const busy = busyId === unit.id
-            const linkCount = links.filter((l) => l.unit_id === unit.id || l.parent_unit_id === unit.id).length
+            const extraChildren = links.filter((l) => l.parent_unit_id === unit.id).map((l) => unitNameById[l.unit_id]).filter(Boolean)
+            const extraParents = links.filter((l) => l.unit_id === unit.id).map((l) => unitNameById[l.parent_unit_id]).filter(Boolean)
+            const linkCount = extraChildren.length + extraParents.length
+            const linkTitle = [
+              extraChildren.length > 0 ? strings.wsOrgAlsoIncludes(extraChildren.join(', ')) : null,
+              extraParents.length > 0 ? strings.wsOrgAlsoFeedsInto(extraParents.join(', ')) : null,
+            ].filter(Boolean).join(' ')
             return (
               <div style={{ border: `1px solid ${isRoot ? 'var(--ws-brand)' : 'var(--ws-border-soft)'}`, borderRadius: 'var(--ws-radius-md)', padding: '12px 13px', background: isRoot ? 'var(--ws-brand-tint)' : 'var(--ws-surface)', height: '100%', boxSizing: 'border-box', boxShadow: 'var(--ws-shadow-soft)' }}>
                 <div style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 14, lineHeight: 1.25, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
@@ -346,7 +353,7 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
                     </span>
                   )}
                   {linkCount > 0 && (
-                    <span title={strings.wsOrgLinkBadge(linkCount)} style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 9, letterSpacing: '0.04em', color: 'var(--ws-brand)', border: '1px solid var(--ws-brand)', borderRadius: 8, padding: '0 5px' }}>
+                    <span title={linkTitle} style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 9, letterSpacing: '0.04em', color: 'var(--ws-brand)', border: '1px solid var(--ws-brand)', borderRadius: 8, padding: '0 5px' }}>
                       🔗{linkCount}
                     </span>
                   )}

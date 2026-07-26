@@ -114,6 +114,19 @@ export default function OrgRollupView({ strings, lang, orgId }) {
   units.forEach((u) => { nameById[u.id] = u.name })
   const orgParticipantTotal = totalDistinctParticipants(units, participantsBySession)
 
+  // Rather than drawing a line across the canvas (which either cuts through
+  // unrelated boxes or, at dozens of departments, turns into unreadable
+  // clutter), selecting a unit highlights whichever OTHER boxes it's
+  // linked to -- a lookup that costs the same whether the org has 5
+  // departments or 50.
+  const linkedToSelected = new Set()
+  if (selectedId) {
+    links.forEach((l) => {
+      if (l.unit_id === selectedId) linkedToSelected.add(l.parent_unit_id)
+      if (l.parent_unit_id === selectedId) linkedToSelected.add(l.unit_id)
+    })
+  }
+
   return (
     <div style={{ maxWidth: 1100, margin: '0 auto', padding: '36px 28px 100px' }}>
       <div style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 11.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ws-text-muted)' }}>{strings.wsOrgRollupKicker}</div>
@@ -143,20 +156,27 @@ export default function OrgRollupView({ strings, lang, orgId }) {
             units={units}
             boxWidth={168}
             boxHeight={188}
-            extraConnectors={links.map((l) => ({ parentId: l.parent_unit_id, childId: l.unit_id }))}
             renderNode={(unit) => {
               const node = rollupById[unit.id]
               const isRoot = unit.id === root?.unit.id
               const isSelected = unit.id === selectedId
+              const isLinked = !isSelected && linkedToSelected.has(unit.id)
               const stage = node ? integratedStage(node.stages, DIMENSIONS) : null
-              const linkCount = links.filter((l) => l.unit_id === unit.id || l.parent_unit_id === unit.id).length
+              const extraChildren = links.filter((l) => l.parent_unit_id === unit.id).map((l) => nameById[l.unit_id]).filter(Boolean)
+              const extraParents = links.filter((l) => l.unit_id === unit.id).map((l) => nameById[l.parent_unit_id]).filter(Boolean)
+              const linkCount = extraChildren.length + extraParents.length
+              const linkTitle = [
+                extraChildren.length > 0 ? strings.wsOrgAlsoIncludes(extraChildren.join(', ')) : null,
+                extraParents.length > 0 ? strings.wsOrgAlsoFeedsInto(extraParents.join(', ')) : null,
+              ].filter(Boolean).join(' ')
               return (
                 <button
                   type="button"
                   onClick={() => setSelectedId((cur) => (cur === unit.id ? null : unit.id))}
                   style={{
-                    border: `1.5px solid ${isSelected ? 'var(--ws-brand)' : (isRoot ? 'var(--ws-brand)' : 'var(--ws-border-soft)')}`,
-                    borderRadius: 'var(--ws-radius-md)', padding: '10px 10px 8px', background: isSelected ? 'var(--ws-bg-soft)' : 'var(--ws-surface)',
+                    border: isSelected || isRoot ? '1.5px solid var(--ws-brand)' : isLinked ? '1.5px dashed var(--ws-brand)' : '1.5px solid var(--ws-border-soft)',
+                    borderRadius: 'var(--ws-radius-md)', padding: '10px 10px 8px',
+                    background: isSelected ? 'var(--ws-bg-soft)' : isLinked ? 'var(--ws-brand-tint)' : 'var(--ws-surface)',
                     height: '100%', width: '100%', boxSizing: 'border-box', boxShadow: isSelected ? 'var(--ws-shadow-deep)' : 'var(--ws-shadow-soft)',
                     textAlign: 'center', cursor: 'pointer', fontFamily: 'inherit',
                   }}
@@ -169,7 +189,7 @@ export default function OrgRollupView({ strings, lang, orgId }) {
                     {stage === null ? strings.wsOrgNoDataYet : `${strings.wsOrgStageLabel} ${stage}`}
                   </div>
                   {linkCount > 0 && (
-                    <div title={strings.wsOrgLinkBadge(linkCount)} style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 9, color: 'var(--ws-brand)', marginTop: 1 }}>
+                    <div title={linkTitle} style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 9, color: 'var(--ws-brand)', marginTop: 1 }}>
                       🔗{linkCount}
                     </div>
                   )}
