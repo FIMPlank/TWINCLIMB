@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import ThemeToggle from '../../components/ThemeToggle'
 
 function useFullscreen() {
   const [active, setActive] = useState(false)
@@ -43,6 +44,7 @@ export default function WorkshopHeader({ strings, lang, title }) {
         </span>
       </a>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 'none' }}>
+        <ThemeToggle strings={strings} className="ws-theme-toggle" darkColor="#0d1714" lightColor="#eef1eb" />
         {canFullscreen && (
           <button
             onClick={toggleFullscreen}

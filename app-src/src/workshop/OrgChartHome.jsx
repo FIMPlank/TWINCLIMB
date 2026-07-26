@@ -10,7 +10,7 @@ export default function OrgChartHome({ strings, lang, onCreated }) {
 
   const inputStyle = {
     width: '100%', boxSizing: 'border-box', padding: '13px 14px', borderRadius: 'var(--ws-radius-sm)',
-    border: '1.5px solid var(--ws-border-soft)', fontSize: 15, fontFamily: 'inherit', background: '#fff', color: 'var(--ws-text-primary)',
+    border: '1.5px solid var(--ws-border-soft)', fontSize: 15, fontFamily: 'inherit', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)',
   }
   const labelStyle = {
     display: 'block', fontFamily: 'var(--ws-font-mono)', fontSize: 11, letterSpacing: '0.1em', color: 'var(--ws-text-muted)',
@@ -65,12 +65,12 @@ export default function OrgChartHome({ strings, lang, onCreated }) {
           <label style={labelStyle}>{strings.wsFacilitatorNameLabel}</label>
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder={strings.wsFacilitatorNamePlaceholder} style={inputStyle} />
 
-          {error && <p style={{ color: '#B3432F', fontSize: 13, marginTop: 10 }}>{error}</p>}
+          {error && <p style={{ color: 'var(--ws-danger)', fontSize: 13, marginTop: 10 }}>{error}</p>}
           <button
             type="submit" disabled={busy || !name.trim() || !orgName.trim()}
             style={{
               marginTop: 20, width: '100%', padding: '15px 26px', border: 'none', borderRadius: 'var(--ws-radius-sm)',
-              background: busy ? '#8a978f' : 'var(--ws-brand)', color: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 15,
+              background: busy ? 'var(--ws-disabled)' : 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 15,
               cursor: busy ? 'default' : 'pointer', transition: 'background 180ms',
             }}
           >

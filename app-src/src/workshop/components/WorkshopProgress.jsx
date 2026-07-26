@@ -17,7 +17,7 @@ export default function WorkshopProgress({ strings, phase }) {
               {i > 0 && (
                 <span
                   aria-hidden="true"
-                  style={{ position: 'absolute', top: 15, right: '50%', width: '100%', height: 2, background: i <= current ? 'var(--ws-brand)' : 'var(--ws-border-on-dark)', zIndex: 0 }}
+                  style={{ position: 'absolute', top: 15, right: '50%', width: '100%', height: 2, background: i <= current ? 'var(--ws-brand-muted)' : 'var(--ws-border-on-dark)', zIndex: 0 }}
                 />
               )}
               <span
@@ -25,9 +25,9 @@ export default function WorkshopProgress({ strings, phase }) {
                 style={{
                   position: 'relative', zIndex: 1, width: 30, height: 30, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontFamily: 'var(--ws-font-mono)', fontSize: 12, fontWeight: 600,
-                  background: state === 'upcoming' ? 'transparent' : state === 'current' ? 'var(--ws-brand-bright)' : 'var(--ws-brand)',
+                  background: state === 'upcoming' ? 'transparent' : state === 'current' ? 'var(--ws-brand-bright)' : 'var(--ws-brand-muted)',
                   border: state === 'upcoming' ? '1.5px solid var(--ws-border-on-dark)' : 'none',
-                  color: state === 'upcoming' ? 'var(--ws-text-muted-on-dark)' : '#0d1714',
+                  color: state === 'upcoming' ? 'var(--ws-text-muted-on-dark)' : 'var(--ws-ink-on-brand-bright)',
                 }}
               >
                 {state === 'done' ? '✓' : i + 1}

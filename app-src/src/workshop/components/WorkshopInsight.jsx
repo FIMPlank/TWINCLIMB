@@ -30,7 +30,7 @@ export default function WorkshopInsight({ strings, lang, dims, participants }) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 14, marginBottom: 28 }}>
       {cards.map((c) => (
-        <div key={c.label} style={{ background: '#fff', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-md)', padding: '18px 20px', boxShadow: 'var(--ws-shadow-soft)' }}>
+        <div key={c.label} style={{ background: 'var(--ws-surface)', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-md)', padding: '18px 20px', boxShadow: 'var(--ws-shadow-soft)' }}>
           <div style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 10.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ws-text-muted)' }}>{c.label}</div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: 8 }}>
             <span style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 22 }}>{c.dim.name}</span>

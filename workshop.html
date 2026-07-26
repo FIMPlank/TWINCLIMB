@@ -4,15 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23179C7D%27/%3E%3Cpath d=%27M8 22 L16 11 L24 22%27 stroke=%27white%27 stroke-width=%273%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#0d1714">
+  <script>
+    // Anti-flash: set data-theme before first paint, same twinclimb_theme
+    // key the landing page uses, so the theme choice carries across pages.
+    (function(){
+      try{
+        var stored = localStorage.getItem('twinclimb_theme');
+        var theme = stored === 'light' || stored === 'dark' ? stored :
+          ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme;
+      }catch(e){}
+    })();
+  </script>
   <link rel="alternate" hreflang="en" href="https://fimplank.github.io/twinassessment/workshop.html">
   <link rel="alternate" hreflang="de" href="https://fimplank.github.io/twinassessment/workshop.de.html">
   <title>TwinClimb Workshop</title>
-  <script type="module" crossorigin src="./assets/workshop-BW07X70t.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/radar-BV74OA-U.js">
-  <link rel="modulepreload" crossorigin href="./assets/DimensionView-FpVVTzuN.js">
+  <script type="module" crossorigin src="./assets/workshop-DU5E1BP9.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/radar-BCaVcGmu.js">
+  <link rel="modulepreload" crossorigin href="./assets/DimensionView-CDM4zIA2.js">
   <link rel="modulepreload" crossorigin href="./assets/codeGen-57PsHZ4O.js">
-  <link rel="modulepreload" crossorigin href="./assets/WorkshopApp-B5yeiPha.js">
-  <link rel="stylesheet" crossorigin href="./assets/radar-DRLWFQMW.css">
+  <link rel="modulepreload" crossorigin href="./assets/WorkshopApp-AQgy7Ttl.js">
+  <link rel="stylesheet" crossorigin href="./assets/radar-I6j_JyUO.css">
 </head>
 <body>
   <div id="root"></div>

@@ -1,7 +1,5 @@
 import { participantColor } from './OverlayRadar'
 
-const C = { ink: '#17191C', sub: '#6B6B66', mut: '#9A9A95', line: '#E3E7E5' }
-
 // Per-dimension spread of quick-pick scores across the room — a dot strip,
 // not an average, so a 0-vs-4 split reads as clearly as a tight cluster.
 export default function SpreadChart({ strings, dimension, participants, color }) {
@@ -13,12 +11,12 @@ export default function SpreadChart({ strings, dimension, participants, color })
   return (
     <div>
       <div style={{ position: 'relative', height: 64, marginTop: 18 }}>
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 30, height: 2, background: C.line }} />
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 30, height: 2, background: 'var(--ws-border-soft)' }} />
         {[0, 1, 2, 3, 4].map((s) => (
-          <div key={s} style={{ position: 'absolute', top: 22, left: `${(s / 4) * 100}%`, transform: 'translateX(-50%)', width: 2, height: 18, background: C.line }} />
+          <div key={s} style={{ position: 'absolute', top: 22, left: `${(s / 4) * 100}%`, transform: 'translateX(-50%)', width: 2, height: 18, background: 'var(--ws-border-soft)' }} />
         ))}
         {[0, 1, 2, 3, 4].map((s) => (
-          <div key={`n${s}`} style={{ position: 'absolute', top: 44, left: `${(s / 4) * 100}%`, transform: 'translateX(-50%)', fontFamily: "'IBM Plex Mono',monospace", fontSize: 10, color: C.mut }}>{s}</div>
+          <div key={`n${s}`} style={{ position: 'absolute', top: 44, left: `${(s / 4) * 100}%`, transform: 'translateX(-50%)', fontFamily: "'IBM Plex Mono',monospace", fontSize: 10, color: 'var(--ws-text-faint)' }}>{s}</div>
         ))}
         {withAnswers.map((p, i) => {
           const v = Number(p.answers[dimension.id]) || 0
@@ -31,13 +29,13 @@ export default function SpreadChart({ strings, dimension, participants, color })
               style={{
                 position: 'absolute', top: 30 + jitter, left: `${(v / 4) * 100}%`, transform: 'translate(-50%,-50%)',
                 width: 14, height: 14, borderRadius: '50%', background: color || participantColor(i),
-                border: '2px solid #fff', boxShadow: '0 1px 3px rgba(0,0,0,0.18)',
+                border: '2px solid var(--ws-surface)', boxShadow: '0 1px 3px rgba(0,0,0,0.18)',
               }}
             />
           )
         })}
       </div>
-      <div style={{ marginTop: 26, fontFamily: "'IBM Plex Mono',monospace", fontSize: 12, color: C.sub }}>
+      <div style={{ marginTop: 26, fontFamily: "'IBM Plex Mono',monospace", fontSize: 12, color: 'var(--ws-text-muted)' }}>
         {vals.length === 0 ? `${strings.wsSpreadLabel}: —` : withAnswers.length === 1 ? `${strings.wsScoreLabel}: ${min}` : `${strings.wsSpreadLabel}: ${min}–${max}`} · {strings.wsParticipantCount(withAnswers.length)}
       </div>
     </div>

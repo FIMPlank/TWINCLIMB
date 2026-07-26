@@ -1,8 +1,6 @@
 import { PALETTE, dimName, capText } from '../../ttcmm'
 import CaptureWall from './CaptureWall'
 
-const C = { ink: '#17191C', sub: '#6B6B66', mut: '#9A9A95', line: '#E3E7E5' }
-
 function referenceStage(dim, participants) {
   const vals = participants.map((p) => p.answers?.[dim.id]).filter((v) => v !== undefined && v !== null)
   return vals.length ? Math.min(...vals) : 0
@@ -28,7 +26,7 @@ export default function DeepDiveView({ strings, lang, dims, session, participant
                 key={d.id} onClick={() => !disabled && onToggleDimension(d.id)} disabled={disabled}
                 style={{
                   padding: '9px 14px', borderRadius: 20, fontSize: 13, fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, cursor: disabled ? 'default' : 'pointer',
-                  border: `1.5px solid ${on ? PALETTE[i] : C.line}`, background: on ? PALETTE[i] : '#fff', color: on ? '#fff' : disabled ? C.mut : C.ink, opacity: disabled ? 0.55 : 1,
+                  border: `1.5px solid ${on ? PALETTE[i] : 'var(--ws-border-soft)'}`, background: on ? PALETTE[i] : 'var(--ws-surface)', color: on ? '#fff' : disabled ? 'var(--ws-text-faint)' : 'var(--ws-text-primary)', opacity: disabled ? 0.55 : 1,
                 }}
               >
                 {dimName(d, lang)}
@@ -38,7 +36,7 @@ export default function DeepDiveView({ strings, lang, dims, session, participant
         </div>
       )}
 
-      {selectedIds.length === 0 && <p style={{ fontSize: 14, color: C.mut, fontStyle: 'italic' }}>{strings.wsPickDimensions}</p>}
+      {selectedIds.length === 0 && <p style={{ fontSize: 14, color: 'var(--ws-text-faint)', fontStyle: 'italic' }}>{strings.wsPickDimensions}</p>}
 
       {selectedIds.map((dimId) => {
         const dim = dims.find((d) => d.id === dimId)
@@ -49,11 +47,11 @@ export default function DeepDiveView({ strings, lang, dims, session, participant
         return (
           <div key={dimId} style={{ marginBottom: 30 }}>
             <h3 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: 18, margin: '0 0 4px' }}>{dimName(dim, lang)}</h3>
-            <p style={{ fontSize: 12.5, fontFamily: "'IBM Plex Mono',monospace", color: C.mut, margin: '0 0 14px' }}>
+            <p style={{ fontSize: 12.5, fontFamily: "'IBM Plex Mono',monospace", color: 'var(--ws-text-faint)', margin: '0 0 14px' }}>
               {strings.stageN(ref)} → {strings.stageN(Math.min(nextStage, 4))}
             </p>
             {caps.length === 0 ? (
-              <p style={{ fontSize: 14, color: C.mut, fontStyle: 'italic' }}>{strings.wsNoCapabilitiesAtNextStage}</p>
+              <p style={{ fontSize: 14, color: 'var(--ws-text-faint)', fontStyle: 'italic' }}>{strings.wsNoCapabilitiesAtNextStage}</p>
             ) : (
               caps.map((cap) => (
                 <CaptureWall

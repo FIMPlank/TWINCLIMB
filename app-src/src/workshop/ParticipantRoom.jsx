@@ -12,7 +12,7 @@ import MoveBoard from './components/MoveBoard'
 import SummaryReport from './components/SummaryReport'
 import PreworkFlow from './components/PreworkFlow'
 
-const cardStyle = { background: '#fff', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 22 }
+const cardStyle = { background: 'var(--ws-surface)', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 22 }
 const h2Style = { fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 'clamp(21px,5vw,26px)', margin: '0 0 6px' }
 const bodyMuted = { fontSize: 14, lineHeight: 1.55, color: 'var(--ws-text-muted)', marginBottom: 18 }
 
@@ -22,7 +22,7 @@ export default function ParticipantRoom({ strings, lang, participant: initialPar
   const reducedMotion = usePrefersReducedMotion()
 
   if (loading) return <p style={{ padding: 60, color: 'var(--ws-text-muted)', textAlign: 'center' }}>…</p>
-  if (error || !session) return <p style={{ padding: 60, color: '#B3432F', textAlign: 'center' }}>{strings.wsNoSession}</p>
+  if (error || !session) return <p style={{ padding: 60, color: 'var(--ws-danger)', textAlign: 'center' }}>{strings.wsNoSession}</p>
 
   // Keep the live copy of "me" in sync with realtime updates to my own row
   // (e.g. a second tab), while PreworkFlow still writes through immediately.

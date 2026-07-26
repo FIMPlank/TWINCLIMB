@@ -3,7 +3,7 @@ import { radarGeometry } from '../../radar'
 import { DIM_SHORT_NAME } from '../../i18n'
 import { participantColor } from './OverlayRadar'
 
-const BAND_COLOR = 'rgba(23,156,125,0.16)'
+const BAND_COLOR = 'var(--ws-brand-tint-fill)'
 
 // The "Compare" stage centerpiece: a large presentation-scale radar with an
 // individual (one line per participant) / group (average + min-max band)
@@ -48,7 +48,7 @@ export default function RadarPresentation({ strings, lang, dims, participants, e
             style={{
               padding: '8px 16px', borderRadius: 20, fontSize: 13, fontFamily: 'var(--ws-font-head)', fontWeight: 600, cursor: 'pointer',
               border: `1.5px solid ${mode === m ? 'var(--ws-brand)' : 'var(--ws-border-soft)'}`,
-              background: mode === m ? 'var(--ws-brand)' : '#fff', color: mode === m ? '#fff' : 'var(--ws-text-primary)',
+              background: mode === m ? 'var(--ws-brand)' : 'var(--ws-surface)', color: mode === m ? 'var(--ws-ink-on-brand)' : 'var(--ws-text-primary)',
             }}
           >
             {m === 'individual' ? strings.wsCompareIndividual : strings.wsCompareGroup}

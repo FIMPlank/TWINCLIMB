@@ -9,7 +9,7 @@ export default function UnitRadar({ lang, dims, stages, size = 230, showLabels =
   const n = dims.length
   const vals = dims.map((d) => stages[d.id])
   const hasAny = vals.some((v) => v !== null && v !== undefined)
-  if (!hasAny) return <p style={{ fontSize: 13, color: '#9A9A95', fontStyle: 'italic', margin: 0 }}>{emptyLabel}</p>
+  if (!hasAny) return <p style={{ fontSize: 13, color: 'var(--ws-text-faint)', fontStyle: 'italic', margin: 0 }}>{emptyLabel}</p>
 
   const g = radarGeometry(vals.map((v) => v ?? 0), n)
   const RN = DIM_SHORT_NAME[lang]
@@ -25,12 +25,12 @@ export default function UnitRadar({ lang, dims, stages, size = 230, showLabels =
 
   return (
     <svg viewBox="0 0 440 400" width="100%" height={size} style={{ display: 'block', margin: '0 auto' }}>
-      {g.rings.map((r, i) => <polygon key={i} points={r.points} fill="none" stroke="#E6E9E7" strokeWidth="1" />)}
-      {g.axes.map((a, i) => <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="#DCE0DD" strokeWidth="1" />)}
-      <polygon points={g.points} fill="rgba(23,156,125,0.16)" stroke="var(--ws-brand)" strokeWidth="2" strokeLinejoin="round" />
-      {g.verts.map((v, i) => (vals[i] !== null && vals[i] !== undefined ? <circle key={i} cx={v.x} cy={v.y} r="4" fill={PALETTE[i]} stroke="#fff" strokeWidth="1.3" /> : null))}
+      {g.rings.map((r, i) => <polygon key={i} points={r.points} fill="none" stroke="var(--ws-chart-ring)" strokeWidth="1" />)}
+      {g.axes.map((a, i) => <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="var(--ws-chart-axis)" strokeWidth="1" />)}
+      <polygon points={g.points} fill="var(--ws-brand-tint-fill)" stroke="var(--ws-brand)" strokeWidth="2" strokeLinejoin="round" />
+      {g.verts.map((v, i) => (vals[i] !== null && vals[i] !== undefined ? <circle key={i} cx={v.x} cy={v.y} r="4" fill={PALETTE[i]} stroke="var(--ws-surface)" strokeWidth="1.3" /> : null))}
       {labels.map((l, i) => (
-        <text key={i} x={l.x} y={l.y} textAnchor={l.anchor} dominantBaseline="middle" fontFamily="IBM Plex Mono" fontSize="10" fill="#6B6B66">{l.name}</text>
+        <text key={i} x={l.x} y={l.y} textAnchor={l.anchor} dominantBaseline="middle" fontFamily="IBM Plex Mono" fontSize="10" fill="var(--ws-text-muted)">{l.name}</text>
       ))}
     </svg>
   )

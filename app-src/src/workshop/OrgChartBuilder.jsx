@@ -3,17 +3,17 @@ import { fetchOrgChart, fetchOrgRollupData, createOrgUnit, renameOrgUnit, delete
 import { canLinkAsExtraParent } from './orgRollup'
 import OrgCanvas from './components/OrgCanvas'
 
-const cardStyle = { background: '#fff', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 24 }
+const cardStyle = { background: 'var(--ws-surface)', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 24 }
 const h2Style = { fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 'clamp(22px,2.8vw,28px)', margin: '8px 0 6px', letterSpacing: '-0.01em' }
 const bodyMuted = { fontSize: 14.5, lineHeight: 1.6, color: 'var(--ws-text-muted)', maxWidth: '68ch' }
-const iconBtn = { width: 30, height: 30, border: '1px solid var(--ws-border-soft)', borderRadius: 7, background: '#fff', fontSize: 13.5, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, textDecoration: 'none', color: 'inherit' }
+const iconBtn = { width: 30, height: 30, border: '1px solid var(--ws-border-soft)', borderRadius: 7, background: 'var(--ws-surface)', fontSize: 13.5, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, textDecoration: 'none', color: 'inherit' }
 const labelStyle = {
   display: 'block', fontFamily: 'var(--ws-font-mono)', fontSize: 10.5, letterSpacing: '0.1em', color: 'var(--ws-text-muted)',
   textTransform: 'uppercase', marginBottom: 6, marginTop: 16,
 }
 const inputStyle = {
   width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 'var(--ws-radius-sm)',
-  border: '1.5px solid var(--ws-border-soft)', fontSize: 14, fontFamily: 'inherit', background: '#fff', color: 'var(--ws-text-primary)',
+  border: '1.5px solid var(--ws-border-soft)', fontSize: 14, fontFamily: 'inherit', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)',
 }
 const DEFAULT_MINUTES = { opening: 10, calibration: 15, deepdive: 40, prioritization: 25 }
 
@@ -55,7 +55,7 @@ function NewUnitModal({ strings, onSubmit, onClose }) {
       style={{ position: 'fixed', inset: 0, background: 'rgba(13,23,20,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 200, padding: 20 }}
       onClick={onClose}
     >
-      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} style={{ background: '#fff', borderRadius: 'var(--ws-radius-lg)', padding: 26, maxWidth: 440, width: '100%', boxShadow: 'var(--ws-shadow-deep)', maxHeight: '85vh', overflowY: 'auto' }}>
+      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} style={{ background: 'var(--ws-surface)', borderRadius: 'var(--ws-radius-lg)', padding: 26, maxWidth: 440, width: '100%', boxShadow: 'var(--ws-shadow-deep)', maxHeight: '85vh', overflowY: 'auto' }}>
         <h3 style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 19, margin: 0 }}>{strings.wsOrgUnitFormTitle}</h3>
 
         <label style={{ ...labelStyle, marginTop: 18 }}>{strings.wsOrgUnitNameLabel}</label>
@@ -69,7 +69,7 @@ function NewUnitModal({ strings, onSubmit, onClose }) {
               style={{
                 padding: '8px 16px', borderRadius: 20, fontSize: 13, fontFamily: 'var(--ws-font-head)', fontWeight: 600, cursor: 'pointer',
                 border: `1.5px solid ${mode === m ? 'var(--ws-brand)' : 'var(--ws-border-soft)'}`,
-                background: mode === m ? 'var(--ws-brand)' : '#fff', color: mode === m ? '#fff' : 'var(--ws-text-muted)',
+                background: mode === m ? 'var(--ws-brand)' : 'var(--ws-surface)', color: mode === m ? 'var(--ws-ink-on-brand)' : 'var(--ws-text-muted)',
               }}
             >
               {m === 'live' ? strings.wsModeLive : strings.wsModeAsync}
@@ -99,10 +99,10 @@ function NewUnitModal({ strings, onSubmit, onClose }) {
         )}
 
         <div style={{ display: 'flex', gap: 10, marginTop: 22 }}>
-          <button type="submit" disabled={busy || !name.trim()} style={{ flex: 1, padding: '12px 18px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14, cursor: 'pointer', opacity: busy ? 0.6 : 1 }}>
+          <button type="submit" disabled={busy || !name.trim()} style={{ flex: 1, padding: '12px 18px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14, cursor: 'pointer', opacity: busy ? 0.6 : 1 }}>
             {busy ? strings.wsCreating : strings.wsOrgUnitFormCreate}
           </button>
-          <button type="button" onClick={onClose} style={{ padding: '12px 18px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
+          <button type="button" onClick={onClose} style={{ padding: '12px 18px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
             {strings.wsOrgCancel}
           </button>
         </div>
@@ -149,7 +149,7 @@ function LinkUnitModal({ strings, unit, units, links, onAdd, onRemove, onClose }
       style={{ position: 'fixed', inset: 0, background: 'rgba(13,23,20,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 200, padding: 20 }}
       onClick={onClose}
     >
-      <div onClick={(e) => e.stopPropagation()} style={{ background: '#fff', borderRadius: 'var(--ws-radius-lg)', padding: 26, maxWidth: 420, width: '100%', boxShadow: 'var(--ws-shadow-deep)', maxHeight: '85vh', overflowY: 'auto' }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ background: 'var(--ws-surface)', borderRadius: 'var(--ws-radius-lg)', padding: 26, maxWidth: 420, width: '100%', boxShadow: 'var(--ws-shadow-deep)', maxHeight: '85vh', overflowY: 'auto' }}>
         <h3 style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 19, margin: 0 }}>{strings.wsOrgLinkModalTitle(unit.name)}</h3>
         <p style={{ fontSize: 13.5, lineHeight: 1.55, color: 'var(--ws-text-muted)', marginTop: 10 }}>{strings.wsOrgLinkIntro}</p>
 
@@ -161,7 +161,7 @@ function LinkUnitModal({ strings, unit, units, links, onAdd, onRemove, onClose }
             {existingParentIds.map((id) => (
               <div key={id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '7px 10px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', fontSize: 13.5 }}>
                 <span>{nameById[id] || '—'}</span>
-                <button type="button" onClick={() => remove(id)} disabled={busy} style={{ border: 'none', background: 'transparent', color: '#B3432F', fontSize: 12.5, cursor: 'pointer', fontFamily: 'var(--ws-font-head)', fontWeight: 600 }}>
+                <button type="button" onClick={() => remove(id)} disabled={busy} style={{ border: 'none', background: 'transparent', color: 'var(--ws-danger)', fontSize: 12.5, cursor: 'pointer', fontFamily: 'var(--ws-font-head)', fontWeight: 600 }}>
                   {strings.wsOrgLinkRemove}
                 </button>
               </div>
@@ -180,7 +180,7 @@ function LinkUnitModal({ strings, unit, units, links, onAdd, onRemove, onClose }
             </select>
             <button
               type="button" onClick={add} disabled={!selected || busy}
-              style={{ padding: '10px 16px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 13.5, cursor: 'pointer', opacity: (!selected || busy) ? 0.5 : 1 }}
+              style={{ padding: '10px 16px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 13.5, cursor: 'pointer', opacity: (!selected || busy) ? 0.5 : 1 }}
             >
               {strings.wsOrgLinkAdd}
             </button>
@@ -188,7 +188,7 @@ function LinkUnitModal({ strings, unit, units, links, onAdd, onRemove, onClose }
         )}
 
         <div style={{ marginTop: 22 }}>
-          <button type="button" onClick={onClose} style={{ padding: '11px 18px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
+          <button type="button" onClick={onClose} style={{ padding: '11px 18px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
             {strings.wsOrgLinkDone}
           </button>
         </div>
@@ -284,7 +284,7 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
   }
 
   if (loading) return <p style={{ padding: 60, color: 'var(--ws-text-muted)', textAlign: 'center' }}>…</p>
-  if (error || !org) return <p style={{ padding: 60, color: '#B3432F', textAlign: 'center' }}>{strings.wsNoSession}</p>
+  if (error || !org) return <p style={{ padding: 60, color: 'var(--ws-danger)', textAlign: 'center' }}>{strings.wsNoSession}</p>
 
   if (!verified) {
     const submitPin = (e) => {
@@ -302,10 +302,10 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
           <p style={{ fontSize: 14.5, color: 'var(--ws-text-muted)', marginBottom: 14 }}>{strings.wsPinPrompt}</p>
           <input
             value={pin} onChange={(e) => { setPin(e.target.value); setPinError(false) }} placeholder={strings.wsPinPlaceholder} autoFocus
-            style={{ width: '100%', boxSizing: 'border-box', padding: '13px 14px', borderRadius: 'var(--ws-radius-sm)', border: '1.5px solid var(--ws-border-soft)', fontSize: 20, textAlign: 'center', letterSpacing: '0.3em', fontFamily: 'var(--ws-font-mono)' }}
+            style={{ width: '100%', boxSizing: 'border-box', padding: '13px 14px', borderRadius: 'var(--ws-radius-sm)', border: '1.5px solid var(--ws-border-soft)', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)', fontSize: 20, textAlign: 'center', letterSpacing: '0.3em', fontFamily: 'var(--ws-font-mono)' }}
           />
-          {pinError && <p style={{ color: '#B3432F', fontSize: 13, marginTop: 10 }}>{strings.wsPinWrong}</p>}
-          <button type="submit" style={{ marginTop: 16, width: '100%', padding: '13px 22px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14 }}>
+          {pinError && <p style={{ color: 'var(--ws-danger)', fontSize: 13, marginTop: 10 }}>{strings.wsPinWrong}</p>}
+          <button type="submit" style={{ marginTop: 16, width: '100%', padding: '13px 22px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14 }}>
             {strings.wsPinSubmit}
           </button>
         </form>
@@ -334,7 +334,7 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
             const busy = busyId === unit.id
             const linkCount = links.filter((l) => l.unit_id === unit.id || l.parent_unit_id === unit.id).length
             return (
-              <div style={{ border: `1px solid ${isRoot ? 'var(--ws-brand)' : 'var(--ws-border-soft)'}`, borderRadius: 'var(--ws-radius-md)', padding: '12px 13px', background: isRoot ? '#eef7f4' : '#fff', height: '100%', boxSizing: 'border-box', boxShadow: 'var(--ws-shadow-soft)' }}>
+              <div style={{ border: `1px solid ${isRoot ? 'var(--ws-brand)' : 'var(--ws-border-soft)'}`, borderRadius: 'var(--ws-radius-md)', padding: '12px 13px', background: isRoot ? 'var(--ws-brand-tint)' : 'var(--ws-surface)', height: '100%', boxSizing: 'border-box', boxShadow: 'var(--ws-shadow-soft)' }}>
                 <div style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 14, lineHeight: 1.25, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                   {unit.name}
                 </div>
@@ -365,7 +365,7 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
                   <button type="button" onClick={() => setLinkingUnit(unit)} disabled={busy} title={strings.wsOrgLinkUnit} aria-label={strings.wsOrgLinkUnit} style={iconBtn}>🔗</button>
                   <button type="button" onClick={() => handleRename(unit)} disabled={busy} title={strings.wsOrgRename} aria-label={strings.wsOrgRename} style={iconBtn}>✎</button>
                   {!isRoot && (
-                    <button type="button" onClick={() => handleDelete(unit)} disabled={busy} title={strings.wsOrgDelete} aria-label={strings.wsOrgDelete} style={{ ...iconBtn, color: '#B3432F' }}>×</button>
+                    <button type="button" onClick={() => handleDelete(unit)} disabled={busy} title={strings.wsOrgDelete} aria-label={strings.wsOrgDelete} style={{ ...iconBtn, color: 'var(--ws-danger)' }}>×</button>
                   )}
                 </div>
               </div>
@@ -377,7 +377,7 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
       <div style={{ marginTop: 28, display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <a
           href={`?orgview=${orgId}`}
-          style={{ padding: '13px 24px', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14.5, textDecoration: 'none' }}
+          style={{ padding: '13px 24px', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14.5, textDecoration: 'none' }}
         >
           {strings.wsOrgViewResults}
         </a>

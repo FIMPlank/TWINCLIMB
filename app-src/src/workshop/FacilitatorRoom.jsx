@@ -16,7 +16,7 @@ import AsyncCheckRoom from './AsyncCheckRoom'
 
 const PHASES = ['prework', 'opening', 'calibration', 'deepdive', 'prioritization', 'summary']
 
-const cardStyle = { background: '#fff', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 28 }
+const cardStyle = { background: 'var(--ws-surface)', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 28 }
 const stageLabelStyle = { fontFamily: 'var(--ws-font-mono)', fontSize: 11.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ws-text-muted)' }
 const h2Style = { fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 'clamp(24px,3vw,32px)', margin: '8px 0 6px', letterSpacing: '-0.01em' }
 const bodyMuted = { fontSize: 15, lineHeight: 1.6, color: 'var(--ws-text-muted)', maxWidth: '68ch' }
@@ -46,7 +46,7 @@ export default function FacilitatorRoom({ strings, lang, sessionId }) {
   }, [session, verified, verifiedKey])
 
   if (loading) return <p style={{ padding: 60, color: 'var(--ws-text-muted)', textAlign: 'center' }}>…</p>
-  if (error || !session) return <p style={{ padding: 60, color: '#B3432F', textAlign: 'center' }}>{strings.wsNoSession}</p>
+  if (error || !session) return <p style={{ padding: 60, color: 'var(--ws-danger)', textAlign: 'center' }}>{strings.wsNoSession}</p>
 
   if (!verified) {
     const submitPin = (e) => {
@@ -64,10 +64,10 @@ export default function FacilitatorRoom({ strings, lang, sessionId }) {
           <p style={{ fontSize: 14.5, color: 'var(--ws-text-muted)', marginBottom: 14 }}>{strings.wsPinPrompt}</p>
           <input
             value={pin} onChange={(e) => { setPin(e.target.value); setPinError(false) }} placeholder={strings.wsPinPlaceholder} autoFocus
-            style={{ width: '100%', boxSizing: 'border-box', padding: '13px 14px', borderRadius: 'var(--ws-radius-sm)', border: '1.5px solid var(--ws-border-soft)', fontSize: 20, textAlign: 'center', letterSpacing: '0.3em', fontFamily: 'var(--ws-font-mono)' }}
+            style={{ width: '100%', boxSizing: 'border-box', padding: '13px 14px', borderRadius: 'var(--ws-radius-sm)', border: '1.5px solid var(--ws-border-soft)', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)', fontSize: 20, textAlign: 'center', letterSpacing: '0.3em', fontFamily: 'var(--ws-font-mono)' }}
           />
-          {pinError && <p style={{ color: '#B3432F', fontSize: 13, marginTop: 10 }}>{strings.wsPinWrong}</p>}
-          <button type="submit" style={{ marginTop: 16, width: '100%', padding: '13px 22px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14 }}>
+          {pinError && <p style={{ color: 'var(--ws-danger)', fontSize: 13, marginTop: 10 }}>{strings.wsPinWrong}</p>}
+          <button type="submit" style={{ marginTop: 16, width: '100%', padding: '13px 22px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14 }}>
             {strings.wsPinSubmit}
           </button>
         </form>
@@ -109,7 +109,7 @@ export default function FacilitatorRoom({ strings, lang, sessionId }) {
 
       <div style={{ maxWidth: 1000, margin: '0 auto', padding: '36px 28px 100px' }}>
         {session.context_note && (
-          <div data-print-hide="" className="ws-animate-fade" style={{ marginBottom: 22, padding: '12px 16px', background: '#FFF7E6', border: '1px solid #EFDDA0', borderRadius: 'var(--ws-radius-sm)', fontSize: 13.5, color: '#6B5A2A', whiteSpace: 'pre-wrap' }}>
+          <div data-print-hide="" className="ws-animate-fade" style={{ marginBottom: 22, padding: '12px 16px', background: 'var(--ws-context-bg)', border: '1px solid var(--ws-context-border)', borderRadius: 'var(--ws-radius-sm)', fontSize: 13.5, color: 'var(--ws-context-text)', whiteSpace: 'pre-wrap' }}>
             {session.context_note}
           </div>
         )}
@@ -122,7 +122,7 @@ export default function FacilitatorRoom({ strings, lang, sessionId }) {
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 20 }}>
               {DIMENSIONS.map((d, i) => (
-                <span key={d.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 13, padding: '6px 12px', borderRadius: 20, border: '1px solid var(--ws-border-soft)', background: '#fff' }}>
+                <span key={d.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 13, padding: '6px 12px', borderRadius: 20, border: '1px solid var(--ws-border-soft)', background: 'var(--ws-surface)' }}>
                   <span style={{ width: 9, height: 9, borderRadius: 3, background: PALETTE[i] }} />
                   {dimName(d, lang)}
                 </span>
@@ -155,7 +155,7 @@ export default function FacilitatorRoom({ strings, lang, sessionId }) {
             <p style={bodyMuted}>{solo ? strings.wsCalibrationIntroSolo : strings.wsCalibrationIntro}</p>
             <div style={{ ...cardStyle, marginTop: 24 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <button onClick={() => setCalibDim(Math.max(0, calibIdx - 1))} disabled={calibIdx <= 0} aria-label={strings.wsPreviousDimension} style={{ padding: '10px 16px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: '#fff', fontSize: 15, opacity: calibIdx <= 0 ? 0.35 : 1 }}>←</button>
+                <button onClick={() => setCalibDim(Math.max(0, calibIdx - 1))} disabled={calibIdx <= 0} aria-label={strings.wsPreviousDimension} style={{ padding: '10px 16px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)', fontSize: 15, opacity: calibIdx <= 0 ? 0.35 : 1 }}>←</button>
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 11.5, color: 'var(--ws-text-muted)' }}>{strings.wsDimensionOf(calibIdx + 1, DIMENSIONS.length)}</div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 9, fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 24, marginTop: 3 }}>
@@ -163,7 +163,7 @@ export default function FacilitatorRoom({ strings, lang, sessionId }) {
                     {dimName(calibDim, lang)}
                   </div>
                 </div>
-                <button onClick={() => setCalibDim(Math.min(DIMENSIONS.length - 1, calibIdx + 1))} disabled={calibIdx >= DIMENSIONS.length - 1} aria-label={strings.wsNextDimension} style={{ padding: '10px 16px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: '#fff', fontSize: 15, opacity: calibIdx >= DIMENSIONS.length - 1 ? 0.35 : 1 }}>→</button>
+                <button onClick={() => setCalibDim(Math.min(DIMENSIONS.length - 1, calibIdx + 1))} disabled={calibIdx >= DIMENSIONS.length - 1} aria-label={strings.wsNextDimension} style={{ padding: '10px 16px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)', fontSize: 15, opacity: calibIdx >= DIMENSIONS.length - 1 ? 0.35 : 1 }}>→</button>
               </div>
               <SpreadChart strings={strings} dimension={calibDim} participants={participants} color={PALETTE[calibIdx]} />
             </div>

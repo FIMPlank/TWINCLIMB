@@ -33,7 +33,7 @@ export default function FacilitatorBar({ strings, session, participantCount, ela
         <button onClick={onPrevPhase} disabled={!canGoPrev} aria-label={strings.wsPreviousPhase} style={{ padding: '9px 14px', border: '1px solid var(--ws-border-on-dark)', borderRadius: 'var(--ws-radius-sm)', background: 'transparent', color: 'var(--ws-text-on-dark)', fontSize: 13, fontFamily: 'var(--ws-font-head)', fontWeight: 600, opacity: canGoPrev ? 1 : 0.35 }}>
           {strings.wsPreviousPhase}
         </button>
-        <button onClick={onNextPhase} disabled={!canGoNext} style={{ padding: '9px 18px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand-bright)', color: '#0d1714', fontSize: 13, fontFamily: 'var(--ws-font-head)', fontWeight: 700, opacity: canGoNext ? 1 : 0.35 }}>
+        <button onClick={onNextPhase} disabled={!canGoNext} style={{ padding: '9px 18px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand-bright)', color: 'var(--ws-ink-on-brand-bright)', fontSize: 13, fontFamily: 'var(--ws-font-head)', fontWeight: 700, opacity: canGoNext ? 1 : 0.35 }}>
           {strings.wsNextPhase}
         </button>
       </div>

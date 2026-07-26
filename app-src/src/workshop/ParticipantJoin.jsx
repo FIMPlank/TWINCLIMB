@@ -37,7 +37,7 @@ export default function ParticipantJoin({ strings, code, onJoined }) {
         <h1 style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 'clamp(26px,6vw,34px)', color: 'var(--ws-text-on-dark)', margin: '18px 0 0' }}>{strings.wsJoinTitle}</h1>
 
         {session === undefined && <p style={{ color: 'var(--ws-text-muted-on-dark)', marginTop: 20 }}>…</p>}
-        {session === null && <p style={{ color: '#E08A6B', marginTop: 20 }}>{strings.wsJoinInvalidCode}</p>}
+        {session === null && <p style={{ color: 'var(--ws-danger-bright)', marginTop: 20 }}>{strings.wsJoinInvalidCode}</p>}
         {session && session.phase !== 'prework' && (
           <div style={{ marginTop: 20, background: 'var(--ws-surface)', borderRadius: 'var(--ws-radius-lg)', padding: 22 }}>
             <p style={{ fontWeight: 600, fontSize: 15, color: 'var(--ws-text-primary)' }}>{strings.wsJoiningLockedTitle}</p>
@@ -55,10 +55,10 @@ export default function ParticipantJoin({ strings, code, onJoined }) {
               value={name} onChange={(e) => setName(e.target.value)} placeholder={strings.wsJoinNamePlaceholder} autoFocus
               style={{ width: '100%', boxSizing: 'border-box', padding: '14px 14px', borderRadius: 'var(--ws-radius-sm)', border: '1.5px solid var(--ws-border-soft)', fontSize: 16, fontFamily: 'inherit', minHeight: 44 }}
             />
-            {error && <p style={{ color: '#B3432F', fontSize: 13, marginTop: 10 }}>{error}</p>}
+            {error && <p style={{ color: 'var(--ws-danger)', fontSize: 13, marginTop: 10 }}>{error}</p>}
             <button
               type="submit" disabled={busy}
-              style={{ marginTop: 16, width: '100%', minHeight: 48, padding: '14px 22px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: busy ? '#8a978f' : 'var(--ws-brand)', color: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 15 }}
+              style={{ marginTop: 16, width: '100%', minHeight: 48, padding: '14px 22px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: busy ? 'var(--ws-disabled)' : 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 15 }}
             >
               {busy ? strings.wsJoining : strings.wsJoinBtn}
             </button>

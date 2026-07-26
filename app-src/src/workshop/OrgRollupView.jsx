@@ -6,7 +6,7 @@ import { rollupOrg, integratedStage, weakestDimension, totalDistinctParticipants
 import UnitRadar from './components/UnitRadar'
 import OrgCanvas from './components/OrgCanvas'
 
-const cardStyle = { background: '#fff', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 24 }
+const cardStyle = { background: 'var(--ws-surface)', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 24 }
 
 function flattenRollup(nodes, map = {}) {
   nodes.forEach((n) => {
@@ -75,7 +75,7 @@ export default function OrgRollupView({ strings, lang, orgId }) {
   }, [orgId])
 
   if (loading) return <p style={{ padding: 60, color: 'var(--ws-text-muted)', textAlign: 'center' }}>…</p>
-  if (error || !org) return <p style={{ padding: 60, color: '#B3432F', textAlign: 'center' }}>{strings.wsNoSession}</p>
+  if (error || !org) return <p style={{ padding: 60, color: 'var(--ws-danger)', textAlign: 'center' }}>{strings.wsNoSession}</p>
 
   if (!verified) {
     const submitPin = (e) => {
@@ -93,10 +93,10 @@ export default function OrgRollupView({ strings, lang, orgId }) {
           <p style={{ fontSize: 14.5, color: 'var(--ws-text-muted)', marginBottom: 14 }}>{strings.wsPinPrompt}</p>
           <input
             value={pin} onChange={(e) => { setPin(e.target.value); setPinError(false) }} placeholder={strings.wsPinPlaceholder} autoFocus
-            style={{ width: '100%', boxSizing: 'border-box', padding: '13px 14px', borderRadius: 'var(--ws-radius-sm)', border: '1.5px solid var(--ws-border-soft)', fontSize: 20, textAlign: 'center', letterSpacing: '0.3em', fontFamily: 'var(--ws-font-mono)' }}
+            style={{ width: '100%', boxSizing: 'border-box', padding: '13px 14px', borderRadius: 'var(--ws-radius-sm)', border: '1.5px solid var(--ws-border-soft)', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)', fontSize: 20, textAlign: 'center', letterSpacing: '0.3em', fontFamily: 'var(--ws-font-mono)' }}
           />
-          {pinError && <p style={{ color: '#B3432F', fontSize: 13, marginTop: 10 }}>{strings.wsPinWrong}</p>}
-          <button type="submit" style={{ marginTop: 16, width: '100%', padding: '13px 22px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14 }}>
+          {pinError && <p style={{ color: 'var(--ws-danger)', fontSize: 13, marginTop: 10 }}>{strings.wsPinWrong}</p>}
+          <button type="submit" style={{ marginTop: 16, width: '100%', padding: '13px 22px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14 }}>
             {strings.wsPinSubmit}
           </button>
         </form>
@@ -156,7 +156,7 @@ export default function OrgRollupView({ strings, lang, orgId }) {
                   onClick={() => setSelectedId((cur) => (cur === unit.id ? null : unit.id))}
                   style={{
                     border: `1.5px solid ${isSelected ? 'var(--ws-brand)' : (isRoot ? 'var(--ws-brand)' : 'var(--ws-border-soft)')}`,
-                    borderRadius: 'var(--ws-radius-md)', padding: '10px 10px 8px', background: isSelected ? 'var(--ws-bg-soft)' : '#fff',
+                    borderRadius: 'var(--ws-radius-md)', padding: '10px 10px 8px', background: isSelected ? 'var(--ws-bg-soft)' : 'var(--ws-surface)',
                     height: '100%', width: '100%', boxSizing: 'border-box', boxShadow: isSelected ? 'var(--ws-shadow-deep)' : 'var(--ws-shadow-soft)',
                     textAlign: 'center', cursor: 'pointer', fontFamily: 'inherit',
                   }}

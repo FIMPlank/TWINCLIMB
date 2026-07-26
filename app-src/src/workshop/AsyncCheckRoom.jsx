@@ -4,7 +4,7 @@ import { updateSession } from './api'
 import ParticipantRollCall from './components/ParticipantRollCall'
 import SummaryReport from './components/SummaryReport'
 
-const cardStyle = { background: '#fff', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 28 }
+const cardStyle = { background: 'var(--ws-surface)', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 28 }
 const h2Style = { fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 'clamp(24px,3vw,32px)', margin: '8px 0 6px', letterSpacing: '-0.01em' }
 const bodyMuted = { fontSize: 15, lineHeight: 1.6, color: 'var(--ws-text-muted)', maxWidth: '68ch' }
 
@@ -43,7 +43,7 @@ export default function AsyncCheckRoom({ strings, lang, sessionId, session, part
           {session.company_name && <span style={{ fontSize: 13.5, fontWeight: 600 }}>{session.company_name}</span>}
         </div>
         {session.phase === 'prework' && (
-          <button onClick={generateReport} disabled={participants.length === 0} style={{ padding: '9px 18px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand-bright)', color: '#0d1714', fontSize: 13, fontFamily: 'var(--ws-font-head)', fontWeight: 700, opacity: participants.length === 0 ? 0.4 : 1 }}>
+          <button onClick={generateReport} disabled={participants.length === 0} style={{ padding: '9px 18px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand-bright)', color: 'var(--ws-ink-on-brand-bright)', fontSize: 13, fontFamily: 'var(--ws-font-head)', fontWeight: 700, opacity: participants.length === 0 ? 0.4 : 1 }}>
             {strings.wsAsyncGenerateReport}
           </button>
         )}
@@ -51,7 +51,7 @@ export default function AsyncCheckRoom({ strings, lang, sessionId, session, part
 
       <div style={{ maxWidth: 1000, margin: '0 auto', padding: '36px 28px 100px' }}>
         {session.context_note && (
-          <div data-print-hide="" className="ws-animate-fade" style={{ marginBottom: 22, padding: '12px 16px', background: '#FFF7E6', border: '1px solid #EFDDA0', borderRadius: 'var(--ws-radius-sm)', fontSize: 13.5, color: '#6B5A2A', whiteSpace: 'pre-wrap' }}>
+          <div data-print-hide="" className="ws-animate-fade" style={{ marginBottom: 22, padding: '12px 16px', background: 'var(--ws-context-bg)', border: '1px solid var(--ws-context-border)', borderRadius: 'var(--ws-radius-sm)', fontSize: 13.5, color: 'var(--ws-context-text)', whiteSpace: 'pre-wrap' }}>
             {session.context_note}
           </div>
         )}
@@ -62,7 +62,7 @@ export default function AsyncCheckRoom({ strings, lang, sessionId, session, part
             <p style={bodyMuted}>{strings.wsAsyncRoomIntro}</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 20 }}>
               {DIMENSIONS.map((d, i) => (
-                <span key={d.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 13, padding: '6px 12px', borderRadius: 20, border: '1px solid var(--ws-border-soft)', background: '#fff' }}>
+                <span key={d.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 13, padding: '6px 12px', borderRadius: 20, border: '1px solid var(--ws-border-soft)', background: 'var(--ws-surface)' }}>
                   <span style={{ width: 9, height: 9, borderRadius: 3, background: PALETTE[i] }} />
                   {dimName(d, lang)}
                 </span>

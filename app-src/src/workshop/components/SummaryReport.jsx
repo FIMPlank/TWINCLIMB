@@ -51,7 +51,7 @@ export default function SummaryReport({ strings, lang, dims, session, participan
 
       <p style={{ fontSize: 14.5, color: 'var(--ws-text-muted)', margin: '0 0 22px', maxWidth: '70ch' }}>{strings.wsSummaryIntro}</p>
 
-      <div data-print-break="" style={{ border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', background: '#fff', padding: 22, boxShadow: 'var(--ws-shadow-soft)' }}>
+      <div data-print-break="" style={{ border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', background: 'var(--ws-surface)', padding: 22, boxShadow: 'var(--ws-shadow-soft)' }}>
         <h3 style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 17, margin: '0 0 12px' }}>{solo ? strings.wsSummaryDivergenceSolo : strings.wsSummaryDivergence}</h3>
         <OverlayRadar strings={strings} lang={lang} dims={dims} participants={participants} emptyLabel={strings.wsNoPreworkYet} />
       </div>
@@ -111,7 +111,7 @@ export default function SummaryReport({ strings, lang, dims, session, participan
 
       {isFacilitator && (
         <div data-print-hide="" style={{ marginTop: 28, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          <button onClick={onPrint} style={{ padding: '13px 22px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: '#fff', color: 'var(--ws-text-primary)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14 }}>
+          <button onClick={onPrint} style={{ padding: '13px 22px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-surface)', color: 'var(--ws-text-primary)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14 }}>
             {strings.wsPrint}
           </button>
           <button disabled title={strings.wsEmailStubNote} style={{ padding: '13px 22px', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-bg-soft)', color: 'var(--ws-text-muted)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 14, cursor: 'not-allowed' }}>

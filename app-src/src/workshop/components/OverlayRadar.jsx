@@ -16,7 +16,7 @@ export default function OverlayRadar({ strings, lang, dims, participants, emptyL
   const withAnswers = participants.filter((p) => p.answers && Object.keys(p.answers).length > 0)
 
   if (withAnswers.length === 0) {
-    return <p style={{ fontSize: 14, color: '#9A9A95', fontStyle: 'italic' }}>{emptyLabel}</p>
+    return <p style={{ fontSize: 14, color: 'var(--ws-text-faint)', fontStyle: 'italic' }}>{emptyLabel}</p>
   }
 
   const base = radarGeometry(dims.map(() => 0), n)
@@ -31,8 +31,8 @@ export default function OverlayRadar({ strings, lang, dims, participants, emptyL
   return (
     <div>
       <svg viewBox="0 0 440 400" width="100%" style={{ maxWidth: 480, display: 'block', margin: '0 auto' }}>
-        {base.rings.map((r, i) => <polygon key={i} points={r.points} fill="none" stroke="#E6E9E7" strokeWidth="1" />)}
-        {base.axes.map((a, i) => <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="#DCE0DD" strokeWidth="1" />)}
+        {base.rings.map((r, i) => <polygon key={i} points={r.points} fill="none" stroke="var(--ws-chart-ring)" strokeWidth="1" />)}
+        {base.axes.map((a, i) => <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="var(--ws-chart-axis)" strokeWidth="1" />)}
         {withAnswers.map((p, pi) => {
           const vals = dims.map((d) => Number(p.answers[d.id]) || 0)
           const g = radarGeometry(vals, n)
@@ -40,12 +40,12 @@ export default function OverlayRadar({ strings, lang, dims, participants, emptyL
           return <polygon key={p.id} points={g.points} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" opacity="0.85" />
         })}
         {labels.map((l, i) => (
-          <text key={i} x={l.x} y={l.y} textAnchor={l.anchor} dominantBaseline="middle" fontFamily="IBM Plex Mono" fontSize="11" fill="#6B6B66">{l.name}</text>
+          <text key={i} x={l.x} y={l.y} textAnchor={l.anchor} dominantBaseline="middle" fontFamily="IBM Plex Mono" fontSize="11" fill="var(--ws-text-muted)">{l.name}</text>
         ))}
       </svg>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 16px', justifyContent: 'center', marginTop: 12 }}>
         {withAnswers.map((p, pi) => (
-          <span key={p.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, color: '#41413D' }}>
+          <span key={p.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, color: 'var(--ws-text-primary)' }}>
             <span style={{ width: 10, height: 10, borderRadius: 3, background: participantColor(pi), display: 'inline-block' }} />
             {p.name}
           </span>

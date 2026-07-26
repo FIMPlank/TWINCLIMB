@@ -24,8 +24,8 @@ export default function MoveBoard({ strings, sessionId, moves, editable }) {
   return (
     <div>
       {moves.map((m, i) => (
-        <div key={m.id} className="ws-animate-in" style={{ display: 'flex', gap: 16, alignItems: 'flex-start', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-md)', background: '#fff', padding: '16px 18px', marginBottom: 10 }}>
-          <span aria-hidden="true" style={{ flex: 'none', width: 28, height: 28, borderRadius: '50%', background: 'var(--ws-brand)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--ws-font-mono)', fontSize: 13, fontWeight: 700 }}>{i + 1}</span>
+        <div key={m.id} className="ws-animate-in" style={{ display: 'flex', gap: 16, alignItems: 'flex-start', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-md)', background: 'var(--ws-surface)', padding: '16px 18px', marginBottom: 10 }}>
+          <span aria-hidden="true" style={{ flex: 'none', width: 28, height: 28, borderRadius: '50%', background: 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--ws-font-mono)', fontSize: 13, fontWeight: 700 }}>{i + 1}</span>
           <div>
             <div style={{ fontSize: 15, fontWeight: 500 }}>{m.description}</div>
             <div style={{ display: 'flex', gap: 16, marginTop: 8, fontFamily: 'var(--ws-font-mono)', fontSize: 11.5, color: 'var(--ws-text-muted)', flexWrap: 'wrap' }}>
@@ -41,7 +41,7 @@ export default function MoveBoard({ strings, sessionId, moves, editable }) {
           <input value={desc} onChange={(e) => setDesc(e.target.value)} placeholder={strings.wsMoveDescPlaceholder} style={{ ...inputStyle, flexBasis: 240 }} />
           <input value={owner} onChange={(e) => setOwner(e.target.value)} placeholder={strings.wsMoveOwnerPlaceholder} style={inputStyle} />
           <input value={timeframe} onChange={(e) => setTimeframe(e.target.value)} placeholder={strings.wsMoveTimeframePlaceholder} style={inputStyle} />
-          <button type="submit" disabled={busy || !desc.trim()} style={{ padding: '11px 20px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: '#fff', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 13.5 }}>
+          <button type="submit" disabled={busy || !desc.trim()} style={{ padding: '11px 20px', border: 'none', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand)', color: 'var(--ws-ink-on-brand)', fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 13.5 }}>
             {strings.wsAddMove}
           </button>
         </form>

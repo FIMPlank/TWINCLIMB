@@ -197,27 +197,59 @@ html[data-theme="light"] .as-theme-toggle .as-icon-sun { display: block; }
    Workshop Studio design tokens — scoped to .ws-root only, so none of
    this reaches the self-assessment app (which never uses classNames,
    only inline styles, so there is nothing to collide with anyway).
-   =================================================================== */
+   Same four-block dark/light pattern as .as-root: a bare dark-first
+   default, a prefers-color-scheme media query for light-preference
+   visitors, and explicit [data-theme] overrides (same twinclimb_theme
+   key + anti-flash script, shared across the whole site) that win in
+   both directions via plain CSS specificity.
+
+   The header bar and every hero gradient (FacilitatorHome, OrgChartHome,
+   ParticipantJoin, SummaryReport's completion banner) stay a fixed dark
+   accent band regardless of theme — that's the signature look, not
+   something the toggle should flatten — so --ws-bg-deep/-elevated,
+   --ws-surface-dark, --ws-text-on-dark/-muted-on-dark, --ws-border-on-dark
+   and --ws-brand-bright never change between the blocks below. Only the
+   tokens that back ordinary page/card content are reactive. */
 .ws-root {
   --ws-bg-deep: #0d1714;
   --ws-bg-elevated: #13231e;
-  --ws-bg-soft: #eef1eb;
-  --ws-surface: #f8f8f4;
   --ws-surface-dark: #172923;
-  --ws-text-primary: #10201a;
   --ws-text-on-dark: #f4f7f2;
-  --ws-text-muted: #66736d;
   --ws-text-muted-on-dark: #9db3a9;
-  --ws-brand: #179c7d;
-  --ws-brand-bright: #35c59d;
-  --ws-brand-deep: #0e6654;
-  --ws-border-soft: rgba(16, 32, 26, 0.1);
   --ws-border-on-dark: rgba(244, 247, 242, 0.14);
+  --ws-brand-bright: #35c59d;
+  --ws-ink-on-brand-bright: #0d1714;
+  --ws-brand-muted: #179c7d;
+  --ws-danger-bright: #e08a6b;
+  --ws-warn: #e0a030;
+
+  /* Reactive tokens — dark-first bare defaults (no stored preference, no
+     prefers-color-scheme: light match). */
+  --ws-bg-soft: #0d1714;
+  --ws-surface: #13231e;
+  --ws-text-primary: #f4f7f2;
+  --ws-text-muted: #9db3a9;
+  --ws-text-faint: #7c9188;
+  --ws-brand: #35c59d;
+  --ws-brand-deep: #5cd9b3;
+  --ws-ink-on-brand: #0d1714;
+  --ws-border-soft: rgba(244, 247, 242, 0.14);
+  --ws-disabled: #3d4a45;
+  --ws-danger: #e0715c;
+  --ws-brand-tint: rgba(53, 197, 157, 0.12);
+  --ws-brand-tint-fill: rgba(53, 197, 157, 0.22);
+  --ws-chart-ring: rgba(244, 247, 242, 0.16);
+  --ws-chart-axis: rgba(244, 247, 242, 0.1);
+  --ws-highlight-flash: rgba(53, 197, 157, 0.35);
+  --ws-context-bg: rgba(224, 160, 48, 0.12);
+  --ws-context-border: rgba(224, 160, 48, 0.35);
+  --ws-context-text: #e8c97a;
+  --ws-shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --ws-shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.5);
+
   --ws-radius-lg: 26px;
   --ws-radius-md: 18px;
   --ws-radius-sm: 10px;
-  --ws-shadow-soft: 0 1px 2px rgba(13, 23, 20, 0.06), 0 12px 32px rgba(13, 23, 20, 0.08);
-  --ws-shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.35);
   --ws-font-head: 'Space Grotesk', sans-serif;
   --ws-font-body: 'IBM Plex Sans', sans-serif;
   --ws-font-mono: 'IBM Plex Mono', monospace;
@@ -227,6 +259,90 @@ html[data-theme="light"] .as-theme-toggle .as-icon-sun { display: block; }
   font-family: var(--ws-font-body);
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  .ws-root {
+    --ws-bg-soft: #eef1eb;
+    --ws-surface: #f8f8f4;
+    --ws-text-primary: #10201a;
+    --ws-text-muted: #66736d;
+    --ws-text-faint: #9a9a95;
+    --ws-brand: #179c7d;
+    --ws-brand-deep: #0e6654;
+    --ws-ink-on-brand: #ffffff;
+    --ws-border-soft: rgba(16, 32, 26, 0.1);
+    --ws-disabled: #8a978f;
+    --ws-danger: #b3432f;
+    --ws-brand-tint: #eef7f4;
+    --ws-brand-tint-fill: rgba(23, 156, 125, 0.16);
+    --ws-chart-ring: #e6e9e7;
+    --ws-chart-axis: #dce0dd;
+    --ws-highlight-flash: #fff3d6;
+    --ws-context-bg: #fff7e6;
+    --ws-context-border: #efdda0;
+    --ws-context-text: #6b5a2a;
+    --ws-shadow-soft: 0 1px 2px rgba(13, 23, 20, 0.06), 0 12px 32px rgba(13, 23, 20, 0.08);
+    --ws-shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.35);
+    color-scheme: light;
+  }
+}
+
+html[data-theme="dark"] .ws-root {
+  --ws-bg-soft: #0d1714;
+  --ws-surface: #13231e;
+  --ws-text-primary: #f4f7f2;
+  --ws-text-muted: #9db3a9;
+  --ws-text-faint: #7c9188;
+  --ws-brand: #35c59d;
+  --ws-brand-deep: #5cd9b3;
+  --ws-ink-on-brand: #0d1714;
+  --ws-border-soft: rgba(244, 247, 242, 0.14);
+  --ws-disabled: #3d4a45;
+  --ws-danger: #e0715c;
+  --ws-brand-tint: rgba(53, 197, 157, 0.12);
+  --ws-brand-tint-fill: rgba(53, 197, 157, 0.22);
+  --ws-chart-ring: rgba(244, 247, 242, 0.16);
+  --ws-chart-axis: rgba(244, 247, 242, 0.1);
+  --ws-highlight-flash: rgba(53, 197, 157, 0.35);
+  --ws-context-bg: rgba(224, 160, 48, 0.12);
+  --ws-context-border: rgba(224, 160, 48, 0.35);
+  --ws-context-text: #e8c97a;
+  --ws-shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --ws-shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+html[data-theme="light"] .ws-root {
+  --ws-bg-soft: #eef1eb;
+  --ws-surface: #f8f8f4;
+  --ws-text-primary: #10201a;
+  --ws-text-muted: #66736d;
+  --ws-text-faint: #9a9a95;
+  --ws-brand: #179c7d;
+  --ws-brand-deep: #0e6654;
+  --ws-ink-on-brand: #ffffff;
+  --ws-border-soft: rgba(16, 32, 26, 0.1);
+  --ws-disabled: #8a978f;
+  --ws-danger: #b3432f;
+  --ws-brand-tint: #eef7f4;
+  --ws-brand-tint-fill: rgba(23, 156, 125, 0.16);
+  --ws-chart-ring: #e6e9e7;
+  --ws-chart-axis: #dce0dd;
+  --ws-highlight-flash: #fff3d6;
+  --ws-context-bg: #fff7e6;
+  --ws-context-border: #efdda0;
+  --ws-context-text: #6b5a2a;
+  --ws-shadow-soft: 0 1px 2px rgba(13, 23, 20, 0.06), 0 12px 32px rgba(13, 23, 20, 0.08);
+  --ws-shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.35);
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ws-root, .ws-root *, .ws-root *::before, .ws-root *::after {
+    transition: background-color .5s ease, border-color .5s ease, color .5s ease, box-shadow .5s ease, fill .5s ease, stroke .5s ease;
+  }
 }
 
 .ws-root *:focus-visible {
@@ -236,6 +352,26 @@ html[data-theme="light"] .as-theme-toggle .as-icon-sun { display: block; }
 }
 
 .ws-root button { font-family: inherit; }
+
+/* Sits in WorkshopHeader's permanently-dark bar, so it borrows the on-dark
+   tokens directly rather than being theme-reactive itself. */
+.ws-theme-toggle {
+  display: flex; flex: none; width: 34px; height: 34px; border-radius: 8px; padding: 0;
+  border: 1px solid var(--ws-border-on-dark); background: transparent;
+  align-items: center; justify-content: center; cursor: pointer; color: var(--ws-text-on-dark);
+}
+.ws-theme-toggle:hover { border-color: var(--ws-brand-bright); color: var(--ws-brand-bright); }
+.ws-theme-toggle svg { width: 16px; height: 16px; }
+.ws-theme-toggle .as-icon-moon { display: block; }
+.ws-theme-toggle .as-icon-sun { display: none; }
+@media (prefers-color-scheme: light) {
+  .ws-theme-toggle .as-icon-moon { display: none; }
+  .ws-theme-toggle .as-icon-sun { display: block; }
+}
+html[data-theme="dark"] .ws-theme-toggle .as-icon-moon { display: block; }
+html[data-theme="dark"] .ws-theme-toggle .as-icon-sun { display: none; }
+html[data-theme="light"] .ws-theme-toggle .as-icon-moon { display: none; }
+html[data-theme="light"] .ws-theme-toggle .as-icon-sun { display: block; }
 
 @keyframes ws-rise-in {
   from { opacity: 0; transform: translateY(10px); }
