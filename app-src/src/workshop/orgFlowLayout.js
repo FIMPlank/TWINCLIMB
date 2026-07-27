@@ -12,13 +12,23 @@ export function layoutOrgFlow(units, extraConnectors, opts = {}) {
   const boxWidth = opts.boxWidth ?? 220
   const boxHeight = opts.boxHeight ?? 120
 
+  const idSet = new Set(units.map((u) => u.id))
+
   const g = new dagre.graphlib.Graph()
   g.setGraph({ rankdir: 'TB', nodesep: 32, ranksep: 56, marginx: 24, marginy: 24 })
   g.setDefaultEdgeLabel(() => ({}))
 
   units.forEach((u) => g.setNode(u.id, { width: boxWidth, height: boxHeight }))
   units.forEach((u) => {
-    if (u.parent_unit_id) g.setEdge(u.parent_unit_id, u.id)
+    // A parent_unit_id that doesn't resolve to a unit actually in this org
+    // (e.g. a child left behind after its parent was deleted) must NOT be
+    // handed to dagre -- setEdge auto-creates a same-named node for a
+    // missing endpoint, and that invisible zero-size phantom distorts the
+    // whole layout: extra rank space nothing renders into, and the orphaned
+    // unit itself getting positioned relative to a "parent" that isn't
+    // there. Treat it as a root instead -- still visible, just not
+    // silently warping everyone else's spacing.
+    if (u.parent_unit_id && idSet.has(u.parent_unit_id)) g.setEdge(u.parent_unit_id, u.id)
   })
 
   dagre.layout(g)
@@ -35,22 +45,35 @@ export function layoutOrgFlow(units, extraConnectors, opts = {}) {
   })
 
   const primaryEdges = units
-    .filter((u) => u.parent_unit_id)
+    .filter((u) => u.parent_unit_id && idSet.has(u.parent_unit_id))
     .map((u) => ({
       id: `${u.parent_unit_id}-${u.id}`,
       source: u.parent_unit_id,
       target: u.id,
+      sourceHandle: 'b',
+      targetHandle: 't',
       type: 'smoothstep',
       style: { stroke: 'var(--ws-border-soft)', strokeWidth: 1.5 },
     }))
 
-  const extraEdges = extraConnectors.map(({ parentId, childId }) => ({
-    id: `extra-${parentId}-${childId}`,
-    source: parentId,
-    target: childId,
-    type: 'smoothstep',
-    style: { stroke: 'var(--ws-brand)', strokeWidth: 1.5, strokeDasharray: '5 4' },
-  }))
+  // Extra-parent links exit/enter through dedicated side handles (right ->
+  // left) rather than the same top/bottom handles the primary tree uses.
+  // Without that, a link whose two ends happen to land in the same column
+  // (common once a chart has any real depth) draws a dead-straight vertical
+  // line right on top of the tree's main trunk -- laterally offset entry
+  // points keep it visually distinct from the primary edges regardless of
+  // where dagre happened to place either end.
+  const extraEdges = extraConnectors
+    .filter(({ parentId, childId }) => idSet.has(parentId) && idSet.has(childId))
+    .map(({ parentId, childId }) => ({
+      id: `extra-${parentId}-${childId}`,
+      source: parentId,
+      target: childId,
+      sourceHandle: 'r',
+      targetHandle: 'l',
+      type: 'smoothstep',
+      style: { stroke: 'var(--ws-brand)', strokeWidth: 1.5, strokeDasharray: '5 4' },
+    }))
 
   const { width: totalWidth, height: totalHeight } = g.graph()
 
