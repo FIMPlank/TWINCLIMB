@@ -4,7 +4,7 @@ import { SHORT_LABEL } from '../i18n'
 import { fetchOrgChart, fetchOrgRollupData } from './orgApi'
 import { rollupOrg, integratedStage, weakestDimension, totalDistinctParticipants } from './orgRollup'
 import UnitRadar from './components/UnitRadar'
-import OrgCanvas from './components/OrgCanvas'
+import OrgFlowCanvas from './components/OrgFlowCanvas'
 
 const cardStyle = { background: 'var(--ws-surface)', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 24 }
 
@@ -152,7 +152,7 @@ export default function OrgRollupView({ strings, lang, orgId }) {
       {units.length > 0 && (
         <div style={{ marginTop: 30 }}>
           <h3 style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 18, margin: '0 0 4px' }}>{strings.wsOrgByDepartment}</h3>
-          <OrgCanvas
+          <OrgFlowCanvas
             units={units}
             boxWidth={168}
             boxHeight={188}
