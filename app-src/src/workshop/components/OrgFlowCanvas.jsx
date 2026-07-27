@@ -7,11 +7,25 @@ import { layoutOrgFlow } from '../orgFlowLayout'
 // nothing here is meant to be manually wired up, so they're invisible
 // (hidden below) rather than the little colored dots React Flow shows by
 // default on a diagram-editing canvas.
+//
+// Two separate things had to be undone here to make box content clickable
+// again. First, React Flow's base stylesheet sets .react-flow__node {
+// pointer-events: none } and only re-enables it via a .draggable/.selectable
+// class -- which we never get since nodesDraggable/elementsSelectable are
+// off globally (nothing in this tree should be manually rearranged), so
+// every click was silently swallowed by the pane underneath. pointerEvents:
+// 'auto' here overrides that for this node's own content. Second, "nodrag
+// nopan" is React Flow's documented escape hatch for the OTHER half of the
+// same problem: even with pointer-events restored, it still captures
+// pointerdown to tell a click apart from a drag/pan gesture -- these classes
+// tell it to leave this content alone.
 function OrgUnitNode({ data }) {
   return (
     <>
       <Handle type="target" position={Position.Top} isConnectable={false} />
-      <div style={{ width: data.width, minHeight: data.height }}>{data.renderNode(data.unit)}</div>
+      <div className="nodrag nopan" style={{ width: data.width, minHeight: data.height, cursor: 'default', pointerEvents: 'auto' }}>
+        {data.renderNode(data.unit)}
+      </div>
       <Handle type="source" position={Position.Bottom} isConnectable={false} />
     </>
   )
