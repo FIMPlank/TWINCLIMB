@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fetchOrgChart, fetchOrgRollupData, createOrgUnit, renameOrgUnit, deleteOrgUnit, addOrgUnitLink, removeOrgUnitLink } from './orgApi'
 import { canLinkAsExtraParent } from './orgRollup'
-import OrgCanvas from './components/OrgCanvas'
+import OrgFlowCanvas from './components/OrgFlowCanvas'
 
 const cardStyle = { background: 'var(--ws-surface)', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 24 }
 const h2Style = { fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 'clamp(22px,2.8vw,28px)', margin: '8px 0 6px', letterSpacing: '-0.01em' }
@@ -322,7 +322,7 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
       <p style={bodyMuted}>{strings.wsOrgBuilderIntro}</p>
 
       <div style={{ marginTop: 24 }}>
-        <OrgCanvas
+        <OrgFlowCanvas
           units={units}
           boxWidth={220}
           boxHeight={152}
