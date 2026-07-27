@@ -19,14 +19,19 @@ import { layoutOrgFlow } from '../orgFlowLayout'
 // same problem: even with pointer-events restored, it still captures
 // pointerdown to tell a click apart from a drag/pan gesture -- these classes
 // tell it to leave this content alone.
+// "t"/"b" carry the primary tree; "l"/"r" are exclusively for extra-parent
+// links, kept on the sides so those edges never share a column with the
+// primary tree's vertical trunk (see orgFlowLayout.js).
 function OrgUnitNode({ data }) {
   return (
     <>
-      <Handle type="target" position={Position.Top} isConnectable={false} />
+      <Handle id="t" type="target" position={Position.Top} isConnectable={false} />
+      <Handle id="l" type="target" position={Position.Left} isConnectable={false} />
       <div className="nodrag nopan" style={{ width: data.width, minHeight: data.height, cursor: 'default', pointerEvents: 'auto' }}>
         {data.renderNode(data.unit)}
       </div>
-      <Handle type="source" position={Position.Bottom} isConnectable={false} />
+      <Handle id="b" type="source" position={Position.Bottom} isConnectable={false} />
+      <Handle id="r" type="source" position={Position.Right} isConnectable={false} />
     </>
   )
 }
