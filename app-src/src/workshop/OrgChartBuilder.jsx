@@ -62,8 +62,8 @@ function NewUnitModal({ strings, onSubmit, onClose }) {
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder={strings.wsOrgUnitNamePlaceholder} autoFocus style={inputStyle} />
 
         <label style={labelStyle}>{strings.wsModeGroupLabel}</label>
-        <div role="group" aria-label={strings.wsModeGroupLabel} style={{ display: 'flex', gap: 8 }}>
-          {['live', 'async'].map((m) => (
+        <div role="group" aria-label={strings.wsModeGroupLabel} style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {['live', 'ai', 'async'].map((m) => (
             <button
               key={m} type="button" onClick={() => setMode(m)} aria-pressed={mode === m}
               style={{
@@ -72,7 +72,7 @@ function NewUnitModal({ strings, onSubmit, onClose }) {
                 background: mode === m ? 'var(--ws-brand)' : 'var(--ws-surface)', color: mode === m ? 'var(--ws-ink-on-brand)' : 'var(--ws-text-muted)',
               }}
             >
-              {m === 'live' ? strings.wsModeLive : strings.wsModeAsync}
+              {m === 'live' ? strings.wsModeLive : m === 'ai' ? strings.wsModeAi : strings.wsModeAsync}
             </button>
           ))}
         </div>
@@ -342,7 +342,7 @@ export default function OrgChartBuilder({ strings, lang, orgId }) {
                   {isRoot && <span style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 9, letterSpacing: '0.1em', color: 'var(--ws-brand-deep)', textTransform: 'uppercase' }}>{strings.wsOrgWholeOrgTag}</span>}
                   {session && (
                     <span style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 9, letterSpacing: '0.08em', color: 'var(--ws-text-muted)', textTransform: 'uppercase' }}>
-                      {session.mode === 'live' ? strings.wsModeLive : strings.wsModeAsync}
+                      {session.mode === 'live' ? strings.wsModeLive : session.mode === 'ai' ? strings.wsModeAi : strings.wsModeAsync}
                     </span>
                   )}
                   {linkCount > 0 && (

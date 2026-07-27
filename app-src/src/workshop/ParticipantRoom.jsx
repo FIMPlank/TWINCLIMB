@@ -11,6 +11,7 @@ import DeepDiveView from './components/DeepDiveView'
 import MoveBoard from './components/MoveBoard'
 import SummaryReport from './components/SummaryReport'
 import PreworkFlow from './components/PreworkFlow'
+import AiInterviewChat from './components/AiInterviewChat'
 
 const cardStyle = { background: 'var(--ws-surface)', border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', boxShadow: 'var(--ws-shadow-soft)', padding: 22 }
 const h2Style = { fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 'clamp(21px,5vw,26px)', margin: '0 0 6px' }
@@ -46,6 +47,25 @@ export default function ParticipantRoom({ strings, lang, participant: initialPar
     return (
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '26px 20px 80px' }}>
         <SummaryReport strings={strings} lang={lang} dims={DIMENSIONS} session={session} participants={participants} responses={[]} moves={[]} isFacilitator={false} mode="async" />
+      </div>
+    )
+  }
+
+  if (session.mode === 'ai') {
+    return (
+      <div style={{ maxWidth: 720, margin: '0 auto', padding: '26px 20px 80px' }}>
+        {session.phase === 'deepdive' && (
+          <div className="ws-animate-in">
+            <h2 style={h2Style}>{strings.wsAiDiscussionTitle}</h2>
+            <p style={bodyMuted}>{strings.wsAiDiscussionParticipantIntro}</p>
+            <AiInterviewChat strings={strings} lang={lang} dims={DIMENSIONS} session={session} participant={mergedParticipant} participants={participants} sessionId={participant.sessionId} reducedMotion={reducedMotion} />
+          </div>
+        )}
+        {session.phase === 'summary' && (
+          <div className="ws-animate-in">
+            <SummaryReport strings={strings} lang={lang} dims={DIMENSIONS} session={session} participants={participants} responses={responses} moves={moves} isFacilitator={false} />
+          </div>
+        )}
       </div>
     )
   }

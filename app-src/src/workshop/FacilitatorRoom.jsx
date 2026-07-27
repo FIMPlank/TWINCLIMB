@@ -13,6 +13,7 @@ import MoveBoard from './components/MoveBoard'
 import SummaryReport from './components/SummaryReport'
 import ParticipantRollCall from './components/ParticipantRollCall'
 import AsyncCheckRoom from './AsyncCheckRoom'
+import AiFacilitatedRoom from './AiFacilitatedRoom'
 
 const PHASES = ['prework', 'opening', 'calibration', 'deepdive', 'prioritization', 'summary']
 
@@ -77,6 +78,10 @@ export default function FacilitatorRoom({ strings, lang, sessionId }) {
 
   if (session.mode === 'async') {
     return <AsyncCheckRoom strings={strings} lang={lang} sessionId={sessionId} session={session} participants={participants} responses={responses} moves={moves} />
+  }
+
+  if (session.mode === 'ai') {
+    return <AiFacilitatedRoom strings={strings} lang={lang} sessionId={sessionId} session={session} participants={participants} responses={responses} moves={moves} />
   }
 
   const phaseIdx = PHASES.indexOf(session.phase)

@@ -16,7 +16,13 @@ function flattenRollup(nodes, map = {}) {
   return map
 }
 
-function ManagementSummary({ strings, lang, node, unit, links, nameById }) {
+// The AI facilitator's session-level synthesis (see AiFacilitatedRoom's
+// generateReport / workshop-ai-facilitate's session_synthesis) is written
+// straight to workshop_sessions.ai_summary, so it rides along with every
+// other session field fetchOrgRollupData already pulls in bulk -- a human
+// moderator scanning the whole org sees it here without opening each
+// department's own summary.
+function ManagementSummary({ strings, lang, node, unit, session, links, nameById }) {
   const stage = integratedStage(node.stages, DIMENSIONS)
   const extraChildren = links.filter((l) => l.parent_unit_id === unit.id).map((l) => nameById[l.unit_id]).filter(Boolean)
   const extraParents = links.filter((l) => l.unit_id === unit.id).map((l) => nameById[l.parent_unit_id]).filter(Boolean)
@@ -37,6 +43,13 @@ function ManagementSummary({ strings, lang, node, unit, links, nameById }) {
       )}
       {extraParents.length > 0 && (
         <p style={{ fontSize: 13, lineHeight: 1.5, color: 'var(--ws-text-muted)', margin: '8px 0 0' }}>{strings.wsOrgAlsoFeedsInto(extraParents.join(', '))}</p>
+      )}
+      {session?.ai_summary && (
+        <div style={{ marginTop: 12, padding: '12px 14px', border: '1px solid var(--ws-brand)', borderRadius: 'var(--ws-radius-sm)', background: 'var(--ws-brand-tint)' }}>
+          <div style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ws-brand-deep)' }}>{strings.wsAiSummaryLabel}</div>
+          <div style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 13.5, margin: '4px 0 2px' }}>{session.ai_summary.headline}</div>
+          <p style={{ fontSize: 12.5, lineHeight: 1.5, color: 'var(--ws-text-primary)', margin: 0 }}>{session.ai_summary.narrative}</p>
+        </div>
       )}
     </div>
   )
@@ -188,7 +201,7 @@ export default function OrgRollupView({ strings, lang, orgId }) {
                 <button type="button" onClick={() => setSelectedId(null)} aria-label={strings.wsOrgCollapse} title={strings.wsOrgCollapse} style={{ width: 28, height: 28, border: 'none', background: 'transparent', fontSize: 16, cursor: 'pointer', color: 'var(--ws-text-muted)' }}>×</button>
               </div>
               <div style={{ marginTop: 12 }}>
-                <ManagementSummary strings={strings} lang={lang} node={selectedNode} unit={selectedUnit} links={links} nameById={nameById} />
+                <ManagementSummary strings={strings} lang={lang} node={selectedNode} unit={selectedUnit} session={sessionsById[selectedUnit.session_id]} links={links} nameById={nameById} />
               </div>
               <a
                 href={`?facilitate=${selectedUnit.session_id}&pin=${sessionsById[selectedUnit.session_id]?.facilitator_pin || ''}`}
