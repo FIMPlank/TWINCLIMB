@@ -79,13 +79,23 @@ export async function setParticipantPreworkNote(participant, dimensionId, text) 
   return prework_notes
 }
 
+// Persists the AI interview's running transcript after every turn (so a
+// refresh mid-interview resumes instead of restarting), and flips
+// ai_interview_done once finish_interview has been called and its
+// responses/move have been written through the normal insertResponse()/
+// addMove() calls above.
+export async function updateParticipantAiInterview(participantId, transcript, done) {
+  const { error } = await supabase.from('workshop_participants').update({ ai_interview: transcript, ai_interview_done: !!done }).eq('id', participantId)
+  if (error) throw error
+}
+
 // Live capture: the first keystroke inserts a row, every subsequent
 // (debounced) edit updates that same row by id — one bubble per
 // participant/prompt on the shared wall, not one row per keystroke.
-export async function insertResponse({ sessionId, participantId, dimensionId, capabilityId, promptType, text }) {
+export async function insertResponse({ sessionId, participantId, dimensionId, capabilityId, promptType, text, aiGenerated }) {
   const { data, error } = await supabase
     .from('workshop_responses')
-    .insert({ session_id: sessionId, participant_id: participantId, dimension_id: dimensionId, capability_id: capabilityId ?? null, prompt_type: promptType, text })
+    .insert({ session_id: sessionId, participant_id: participantId, dimension_id: dimensionId, capability_id: capabilityId ?? null, prompt_type: promptType, text, ai_generated: !!aiGenerated })
     .select()
     .single()
   if (error) throw error
@@ -100,7 +110,7 @@ export async function updateResponseText(responseId, text) {
 export async function addMove(sessionId, move) {
   const { data, error } = await supabase
     .from('workshop_moves')
-    .insert({ session_id: sessionId, dimension_id: move.dimensionId ?? null, capability_id: move.capabilityId ?? null, description: move.description, owner: move.owner, timeframe: move.timeframe })
+    .insert({ session_id: sessionId, dimension_id: move.dimensionId ?? null, capability_id: move.capabilityId ?? null, description: move.description, owner: move.owner, timeframe: move.timeframe, ai_generated: !!move.aiGenerated })
     .select()
     .single()
   if (error) throw error

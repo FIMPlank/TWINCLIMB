@@ -51,6 +51,14 @@ export default function SummaryReport({ strings, lang, dims, session, participan
 
       <p style={{ fontSize: 14.5, color: 'var(--ws-text-muted)', margin: '0 0 22px', maxWidth: '70ch' }}>{strings.wsSummaryIntro}</p>
 
+      {isFacilitator && session.ai_summary && (
+        <div data-print-break="" className="ws-animate-in" style={{ border: '1px solid var(--ws-brand)', borderRadius: 'var(--ws-radius-lg)', background: 'var(--ws-brand-tint)', padding: '18px 22px', marginBottom: 22 }}>
+          <div style={{ fontFamily: 'var(--ws-font-mono)', fontSize: 10.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ws-brand-deep)' }}>{strings.wsAiSummaryLabel}</div>
+          <div style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 16, margin: '6px 0 4px' }}>{session.ai_summary.headline}</div>
+          <p style={{ fontSize: 13.5, lineHeight: 1.55, color: 'var(--ws-text-primary)', margin: 0 }}>{session.ai_summary.narrative}</p>
+        </div>
+      )}
+
       <div data-print-break="" style={{ border: '1px solid var(--ws-border-soft)', borderRadius: 'var(--ws-radius-lg)', background: 'var(--ws-surface)', padding: 22, boxShadow: 'var(--ws-shadow-soft)' }}>
         <h3 style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 600, fontSize: 17, margin: '0 0 12px' }}>{solo ? strings.wsSummaryDivergenceSolo : strings.wsSummaryDivergence}</h3>
         <OverlayRadar strings={strings} lang={lang} dims={dims} participants={participants} emptyLabel={strings.wsNoPreworkYet} />

@@ -65,8 +65,8 @@ export default function FacilitatorHome({ strings, lang, onCreated }) {
             {strings.wsBrand}
           </span>
 
-          <div role="group" aria-label={strings.wsModeGroupLabel} className="ws-animate-fade" style={{ display: 'flex', gap: 8, marginTop: 20 }}>
-            {['live', 'async'].map((m) => (
+          <div role="group" aria-label={strings.wsModeGroupLabel} className="ws-animate-fade" style={{ display: 'flex', gap: 8, marginTop: 20, flexWrap: 'wrap' }}>
+            {['live', 'ai', 'async'].map((m) => (
               <button
                 key={m} type="button" onClick={() => setMode(m)} aria-pressed={mode === m}
                 style={{
@@ -75,7 +75,7 @@ export default function FacilitatorHome({ strings, lang, onCreated }) {
                   background: mode === m ? 'var(--ws-brand-bright)' : 'transparent', color: mode === m ? 'var(--ws-ink-on-brand-bright)' : 'var(--ws-text-muted-on-dark)',
                 }}
               >
-                {m === 'live' ? strings.wsModeLive : strings.wsModeAsync}
+                {m === 'live' ? strings.wsModeLive : m === 'ai' ? strings.wsModeAi : strings.wsModeAsync}
               </button>
             ))}
           </div>
@@ -84,10 +84,10 @@ export default function FacilitatorHome({ strings, lang, onCreated }) {
             className="ws-animate-in"
             style={{ fontFamily: 'var(--ws-font-head)', fontWeight: 700, fontSize: 'clamp(32px,4.6vw,48px)', lineHeight: 1.1, letterSpacing: '-0.01em', color: 'var(--ws-text-on-dark)', margin: '20px 0 0' }}
           >
-            {mode === 'live' ? strings.wsHomeTitle : strings.wsAsyncHomeTitle}
+            {mode === 'live' ? strings.wsHomeTitle : mode === 'ai' ? strings.wsAiHomeTitle : strings.wsAsyncHomeTitle}
           </h1>
           <p className="ws-animate-in" style={{ fontSize: 16.5, lineHeight: 1.6, color: 'var(--ws-text-muted-on-dark)', margin: '16px 0 0', maxWidth: '58ch' }}>
-            {mode === 'live' ? strings.wsHomeIntro : strings.wsAsyncHomeIntro}
+            {mode === 'live' ? strings.wsHomeIntro : mode === 'ai' ? strings.wsAiHomeIntro : strings.wsAsyncHomeIntro}
           </p>
 
           <form
@@ -131,7 +131,7 @@ export default function FacilitatorHome({ strings, lang, onCreated }) {
                 cursor: busy ? 'default' : 'pointer', transition: 'background 180ms',
               }}
             >
-              {busy ? strings.wsCreating : mode === 'live' ? strings.wsCreateSession : strings.wsAsyncCreateSession}
+              {busy ? strings.wsCreating : mode === 'live' ? strings.wsCreateSession : mode === 'ai' ? strings.wsAiCreateSession : strings.wsAsyncCreateSession}
             </button>
           </form>
 

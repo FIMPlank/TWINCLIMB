@@ -29,7 +29,7 @@ export async function fetchOrgChart(orgId) {
 // session is created through the very same createSession() that flow uses,
 // so nothing about it is a cut-down version of a "real" workshop session.
 export async function createOrgUnit(org, parentUnitId, name, opts = {}) {
-  const mode = opts.mode === 'live' ? 'live' : 'async'
+  const mode = opts.mode === 'live' || opts.mode === 'ai' ? opts.mode : 'async'
   const sessionOpts = { mode, companyName: name }
   if (opts.contextNote) sessionOpts.contextNote = opts.contextNote
   if (mode === 'live' && opts.phaseMinutes) sessionOpts.phaseMinutes = opts.phaseMinutes
