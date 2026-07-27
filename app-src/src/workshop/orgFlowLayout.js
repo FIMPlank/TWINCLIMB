@@ -33,15 +33,32 @@ export function layoutOrgFlow(units, extraConnectors, opts = {}) {
 
   dagre.layout(g)
 
-  const nodes = units.map((u) => {
+  // Own, trusted record of every node's box -- used both to place the
+  // nodes themselves and to compute every edge's exact endpoints (below),
+  // so both stay consistent with the same single source of truth instead
+  // of edges depending on however React Flow resolves handle positions for
+  // a custom node type.
+  const positions = {}
+  units.forEach((u) => {
     const n = g.node(u.id)
-    return {
-      id: u.id,
-      type: 'orgUnit',
-      position: { x: n.x - boxWidth / 2, y: n.y - boxHeight / 2 },
-      data: { unit: u },
-      draggable: false,
-    }
+    positions[u.id] = { x: n.x - boxWidth / 2, y: n.y - boxHeight / 2, cx: n.x }
+  })
+
+  const nodes = units.map((u) => ({
+    id: u.id,
+    type: 'orgUnit',
+    position: { x: positions[u.id].x, y: positions[u.id].y },
+    width: boxWidth,
+    height: boxHeight,
+    data: { unit: u },
+    draggable: false,
+  }))
+
+  const anchors = (parentId, childId) => ({
+    sx: positions[parentId].cx,
+    sy: positions[parentId].y + boxHeight,
+    tx: positions[childId].cx,
+    ty: positions[childId].y,
   })
 
   const primaryEdges = units
@@ -50,28 +67,25 @@ export function layoutOrgFlow(units, extraConnectors, opts = {}) {
       id: `${u.parent_unit_id}-${u.id}`,
       source: u.parent_unit_id,
       target: u.id,
-      sourceHandle: 'b',
-      targetHandle: 't',
-      type: 'smoothstep',
+      type: 'primary',
+      data: anchors(u.parent_unit_id, u.id),
       style: { stroke: 'var(--ws-border-soft)', strokeWidth: 1.5 },
     }))
 
-  // Extra-parent links exit/enter through dedicated side handles (right ->
-  // left) rather than the same top/bottom handles the primary tree uses.
-  // Without that, a link whose two ends happen to land in the same column
-  // (common once a chart has any real depth) draws a dead-straight vertical
-  // line right on top of the tree's main trunk -- laterally offset entry
-  // points keep it visually distinct from the primary edges regardless of
-  // where dagre happened to place either end.
+  // Extra-parent links use a dedicated custom edge (see OrgFlowCanvas's
+  // SideLinkEdge) that computes its own detour path -- a straight line
+  // between the two boxes drew right on top of the primary tree's trunk
+  // whenever both ends happened to land in the same column (routine at any
+  // real tree depth). boxWidth lets it size its sideways detour to
+  // reliably clear a box that happens to sit in the same column.
   const extraEdges = extraConnectors
     .filter(({ parentId, childId }) => idSet.has(parentId) && idSet.has(childId))
     .map(({ parentId, childId }) => ({
       id: `extra-${parentId}-${childId}`,
       source: parentId,
       target: childId,
-      sourceHandle: 'r',
-      targetHandle: 'l',
-      type: 'smoothstep',
+      type: 'sideLink',
+      data: { ...anchors(parentId, childId), boxWidth },
       style: { stroke: 'var(--ws-brand)', strokeWidth: 1.5, strokeDasharray: '5 4' },
     }))
 
