@@ -138,7 +138,7 @@ const en = {
   editAnswers: '← Edit answers',
   printPage: 'Print / save PDF',
   restart: 'Start over',
-  footerCredit: 'Based on the Twin Transformation Capability Maturity Model (TTCMM) — Breiter, Crome, Oberländer & Schnaak (2024), Dynamic Capabilities for the Twin Transformation Climb: A Capability Maturity Model, Information Systems Frontiers 26:2205–2226. The model was developed following Becker et al. (2009) from a structured literature review and 13 expert interviews, and demonstrated with a technology service provider. It structures 45 literature-backed capabilities across 6 dimensions and 4 maturity stages, and reveals 3 pathways to twin transformation. Prototype for assessment purposes.',
+  footerCredit: 'Based on the Twin Transformation Capability Maturity Model (TTCMM) — Breiter, Crome, Oberländer & Schnaak (2024), Dynamic Capabilities for the Twin Transformation Climb: A Capability Maturity Model, Information Systems Frontiers 26:2205–2226. The model was developed following Becker et al. (2009) from a structured literature review and 13 expert interviews, and demonstrated with a technology service provider. It structures 45 literature-backed capabilities across 6 dimensions and 4 maturity stages, and reveals 3 pathways to twin transformation.',
 
   // submission panel + admin link + collapse chrome
   panelKicker: 'Longitudinal study',
@@ -398,10 +398,10 @@ const en = {
   wsPhaseElapsed: (mmss, budget) => `${mmss} elapsed · ~${budget} min planned`,
   wsNotStartedAbbrev: '—',
 
-  // AI report check (early access)
-  rcBrand: 'AI REPORT CHECK · EARLY ACCESS',
-  rcEarlyAccessTitle: 'Early Access',
-  rcEarlyAccessBody: 'This analysis is under continuous development. Please review the AI-assisted mappings before relying on the results.',
+  // AI report check
+  rcBrand: 'AI REPORT CHECK',
+  rcEarlyAccessTitle: 'Note',
+  rcEarlyAccessBody: 'This analysis is AI-assisted. Please review the AI-assisted mappings before relying on the results.',
   rcHeroTitle: 'Draft your assessment from a report',
   rcHeroIntro: 'Upload a sustainability, digital-strategy, or annual report and an AI will draft a starting TTCMM assessment from it — with a quoted citation for every judgment — for you to review and correct before it counts.',
   rcCompanyNameLabel: 'Company / client (optional)',
@@ -549,7 +549,7 @@ const de = {
   editAnswers: '← Antworten bearbeiten',
   printPage: 'Drucken / als PDF speichern',
   restart: 'Neu starten',
-  footerCredit: 'Basierend auf dem Twin Transformation Capability Maturity Model (TTCMM) — Breiter, Crome, Oberländer & Schnaak (2024), Dynamic Capabilities for the Twin Transformation Climb: A Capability Maturity Model, Information Systems Frontiers 26:2205–2226. Das Modell wurde in Anlehnung an Becker et al. (2009) aus einer strukturierten Literaturrecherche und 13 Experteninterviews entwickelt und mit einem Technologiedienstleister erprobt. Es strukturiert 45 literaturbasierte Fähigkeiten über 6 Dimensionen und 4 Reifegradstufen und zeigt 3 Wege zur Twin Transformation. Prototyp zu Assessment-Zwecken.',
+  footerCredit: 'Basierend auf dem Twin Transformation Capability Maturity Model (TTCMM) — Breiter, Crome, Oberländer & Schnaak (2024), Dynamic Capabilities for the Twin Transformation Climb: A Capability Maturity Model, Information Systems Frontiers 26:2205–2226. Das Modell wurde in Anlehnung an Becker et al. (2009) aus einer strukturierten Literaturrecherche und 13 Experteninterviews entwickelt und mit einem Technologiedienstleister erprobt. Es strukturiert 45 literaturbasierte Fähigkeiten über 6 Dimensionen und 4 Reifegradstufen und zeigt 3 Wege zur Twin Transformation.',
 
   // submission panel + admin link + collapse chrome
   panelKicker: 'Längsschnittstudie',
@@ -809,10 +809,10 @@ const de = {
   wsPhaseElapsed: (mmss, budget) => `${mmss} vergangen · ~${budget} Min. geplant`,
   wsNotStartedAbbrev: '—',
 
-  // KI-Berichtscheck (Early Access)
-  rcBrand: 'KI-BERICHTSCHECK · EARLY ACCESS',
-  rcEarlyAccessTitle: 'Early Access',
-  rcEarlyAccessBody: 'Die Analyse wird kontinuierlich weiterentwickelt. Bitte prüfen Sie die KI-gestützten Zuordnungen, bevor Sie die Ergebnisse verwenden.',
+  // KI-Berichtscheck
+  rcBrand: 'KI-BERICHTSCHECK',
+  rcEarlyAccessTitle: 'Hinweis',
+  rcEarlyAccessBody: 'Die Analyse ist KI-gestützt. Bitte prüfen Sie die KI-gestützten Zuordnungen, bevor Sie die Ergebnisse verwenden.',
   rcHeroTitle: 'Assessment-Entwurf aus einem Bericht erstellen',
   rcHeroIntro: 'Laden Sie einen Nachhaltigkeits-, Digitalstrategie- oder Geschäftsbericht hoch — eine KI erstellt daraus einen Assessment-Entwurf, mit einem Zitat als Beleg für jede Einschätzung, den Sie prüfen und korrigieren können, bevor er zählt.',
   rcCompanyNameLabel: 'Unternehmen / Kunde (optional)',

@@ -5,10 +5,10 @@ import { resolve } from 'node:path'
 // TwinClimb assessment app. Builds to six static entry points sharing one
 // i18n string table (src/i18n.js) and the canonical TTCMM data/logic: the
 // self-assessment (src/App.jsx), the live workshop mode
-// (src/workshop/WorkshopApp.jsx), and the AI report check beta
+// (src/workshop/WorkshopApp.jsx), and the AI report check
 // (src/reportcheck/ReportCheckApp.jsx), each EN/DE. `base: './'` keeps asset
 // URLs relative so the build can be copied straight into the repo root,
-// which GitHub Pages serves from a subpath (fimplank.github.io/TwinAssessment/).
+// which GitHub Pages serves from a subpath (fimplank.github.io/TWINCLIMB/).
 export default defineConfig({
   plugins: [react()],
   base: './',

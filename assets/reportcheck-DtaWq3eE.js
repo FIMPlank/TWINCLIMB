@@ -1,0 +1,1 @@
+import{D as e,r as t,x as n,y as r}from"./radar-TiqnlJ0j.js";import{t as i}from"./ReportCheckApp-DfzAnkat.js";var a=e(n(),1),o=r(),s=t();(0,o.createRoot)(document.getElementById(`root`)).render((0,s.jsx)(a.StrictMode,{children:(0,s.jsx)(i,{lang:`en`})}));

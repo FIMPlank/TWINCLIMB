@@ -1,7 +1,7 @@
 import { supabase } from '../workshop/supabaseClient'
 import { generateCode } from '../workshop/codeGen'
 
-// AI Report Check (beta) data layer. Same code-boundary access model as the
+// AI Report Check data layer. Same code-boundary access model as the
 // workshop tables — see supabase/migrations/20260721_report_check.sql.
 
 export async function assessReport(text, lang, docType) {

@@ -12,7 +12,7 @@ It operationalizes the **Twin Transformation Capability Maturity Model (TTCMM)**
 > Information Systems Frontiers, 26, 2205–2226.
 > https://doi.org/10.1007/s10796-024-10520-y (Open Access)
 
-**Live site:** https://fimplank.github.io/TwinAssessment/
+**Live site:** https://fimplank.github.io/TWINCLIMB/
 
 Provided in the context of twin transformation research at **Fraunhofer FIT /
 FIM Research Institute for Information Management**.
@@ -65,7 +65,7 @@ the assessment app is the one exception (see [Architecture](#architecture)).
 | `assessment.html` / `assessment.de.html` | The assessment app (EN/DE) — **built** from [`app-src/`](app-src/), not hand-edited. |
 | `assets/` | Hashed JS/CSS/font files the build emits for the assessment app. Also generated — don't hand-edit. |
 | `dashboard.html` | Password-protected researcher dashboard (view + export submissions). |
-| `impressum.html` / `datenschutz.html` | Legal placeholder pages (to be completed). |
+| `impressum.html` / `datenschutz.html` | Legal pages: Impressum (Fraunhofer FIT, from twin-transformation.fraunhofer.de) and privacy policy (still a placeholder). |
 | `og-image.png` | Open Graph preview image for shared links. |
 | `.nojekyll` | Serves files as-is (disables Jekyll processing). |
 
@@ -248,5 +248,3 @@ development* above).
   for the Twin Transformation Climb*, Information Systems Frontiers 26:2205–2226.
 - **Provided by:** Fraunhofer FIT / FIM Research Institute for Information
   Management, in the context of twin transformation research.
-
-Prototype for research purposes.
