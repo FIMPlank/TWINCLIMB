@@ -61,11 +61,10 @@ the assessment app is the one exception (see [Architecture](#architecture)).
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Landing / start page — the entry point. Hero, explainer, how-it-works, research card, affiliation, footer. |
+| `index.html` / `index.de.html` | Landing / start page (EN/DE) — the entry point. Hero, explainer, how-it-works, research card, affiliation, footer. The footer holds the **Impressum** and **Datenschutz** as collapsible sections (`#impressum`, `#datenschutz`); the privacy policy is still a placeholder. |
 | `assessment.html` / `assessment.de.html` | The assessment app (EN/DE) — **built** from [`app-src/`](app-src/), not hand-edited. |
 | `assets/` | Hashed JS/CSS/font files the build emits for the assessment app. Also generated — don't hand-edit. |
 | `dashboard.html` | Password-protected researcher dashboard (view + export submissions). |
-| `impressum.html` / `datenschutz.html` | Legal pages: Impressum (Fraunhofer FIT, from twin-transformation.fraunhofer.de) and privacy policy (still a placeholder). |
 | `og-image.png` | Open Graph preview image for shared links. |
 | `.nojekyll` | Serves files as-is (disables Jekyll processing). |
 
@@ -231,6 +230,8 @@ the app so the change lands in both locales together.
 ---
 
 ## Deployment
+
+**Moving to another host:** all internal links are relative. The only absolute URLs are the canonical / hreflang / Open Graph tags at the top of `index.html` and `index.de.html` — replace `https://fimplank.github.io/TWINCLIMB/` there.
 
 GitHub Pages, **Deploy from a branch** → `main` / root. Every push to `main`
 triggers a Pages build; the site updates automatically once it goes green. The
